@@ -2,13 +2,133 @@
 <html>
 <head>
     <title>Dashboard</title>
-    <link rel="stylesheet" href="../static/styles
-    .css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+        }
+
+        /* Top Bar */
+        .header {
+            background: #ffffff;
+            padding: 15px 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 20px;
+            color: #333;
+        }
+
+        .logout {
+            color: #e63946;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        /* Grid */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        /* Card */
+        .card {
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            display: block;
+        }
+
+        .card span {
+            display: block;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        /* Welcome */
+        .welcome {
+            margin-bottom: 25px;
+            font-size: 22px;
+            color: #444;
+        }
+
+    </style>
 </head>
+
 <body>
 
-<h1>Welcome 🎉</h1>
-<p>You are logged in!</p>
-<a href="./recommend.html">View Recommendations</a>
+    <!-- Header -->
+    <div class="header">
+        <h1>Dashboard</h1>
+        <a href="/logout" class="logout">Logout</a>
+    </div>
+
+    <!-- Content -->
+    <div class="container">
+
+        <div class="welcome">
+            Welcome, <b>{{ name }}</b> 👋
+        </div>
+
+        <div class="grid">
+
+            <div class="card">
+                <a href="/restaurants">
+                    <span>🍽️</span>
+                    Restaurants
+                </a>
+            </div>
+
+            <div class="card">
+                <a href="/recommend">
+                    <span>🎯</span>
+                    Recommendations
+                </a>
+            </div>
+
+            <div class="card">
+                <a href="/orders">
+                    <span>📦</span>
+                    My Orders
+                </a>
+            </div>
+
+            <div class="card">
+                <a href="/analytics">
+                    <span>📊</span>
+                    Analytics
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+
 </body>
 </html>

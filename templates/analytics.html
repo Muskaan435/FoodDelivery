@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Analytics</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<h1>📊 Analytics Dashboard</h1>
+
+<h3>Total Users: {{ users }}</h3>
+<h3>Total Orders: {{ orders }}</h3>
+
+<h3>Most Popular Item:</h3>
+<p>
+    {% if popular %}
+        {{ popular[0] }} ({{ popular[1] }} orders)
+    {% else %}
+        No data available
+    {% endif %}
+</p>
+
+<!-- 👇 Store data safely -->
+<div id="data"
+     data-users="{{ users }}"
+     data-orders="{{ orders }}">
+</div>
+
+<canvas id="myChart" width="300" height="150"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    var dataDiv = document.getElementById("data");
+
+    var users = parseInt(dataDiv.getAttribute("data-users"));
+    var orders = parseInt(dataDiv.getAttribute("data-orders"));
+
+    var ctx = document.getElementById('myChart').getContext('2d');
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Users', 'Orders'],
+            datasets: [{
+                label: 'Stats',
+                data: [users, orders]
+            }]
+        }
+    });
+</script>
+
+</body>
+</html>
