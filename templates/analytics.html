@@ -2,51 +2,84 @@
 <html>
 <head>
     <title>Analytics</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='analyticsstyle.css') }}">
 </head>
 <body>
 
-<h1>📊 Analytics Dashboard</h1>
+<h1>Analytics</h1>
 
-<h3>Total Users: {{ users }}</h3>
-<h3>Total Orders: {{ orders }}</h3>
+<div class="dashboard">
 
-<h3>Most Popular Item:</h3>
-<p>
-    {% if popular %}
-        {{ popular[0] }} ({{ popular[1] }} orders)
-    {% else %}
-        No data available
-    {% endif %}
-</p>
+    <!-- LEFT SIDE -->
+    <div class="left">
+        <div class="card">
+            <h3>Total Users: {{ users }}</h3>
+            <h3>Total Orders: {{ orders }}</h3>
+        </div>
 
-<!-- 👇 Store data safely -->
-<div id="data"
-     data-users="{{ users }}"
-     data-orders="{{ orders }}">
+        <div class="card">
+            <h3>Most Popular Item:</h3>
+            <p>
+                {% if popular %}
+                    {{ popular[0] }} ({{ popular[1] }} orders)
+                {% else %}
+                    No data available
+                {% endif %}
+            </p>
+        </div>
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <div class="right">
+        <canvas id="myChart"></canvas>
+    </div>
+
 </div>
 
-<canvas id="myChart" width="300" height="150"></canvas>
+<!-- DATA -->
+<div id="data"
+     data-value="{{ popular[1] }}">
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
     var dataDiv = document.getElementById("data");
-
-    var users = parseInt(dataDiv.getAttribute("data-users"));
-    var orders = parseInt(dataDiv.getAttribute("data-orders"));
+    var value = parseInt(dataDiv.getAttribute("data-value"));
 
     var ctx = document.getElementById('myChart').getContext('2d');
 
     new Chart(ctx, {
-        type: 'bar',
+        type: 'doughnut',
         data: {
-            labels: ['Users', 'Orders'],
+            labels: ['{{ popular[0] }}'],
             datasets: [{
-                label: 'Stats',
-                data: [users, orders]
+                data: [value],
+                backgroundColor: ['#06b6d4'],
+                borderWidth: 0
             }]
-        }
+        },
+        options: {
+            cutout: '70%',
+            plugins: {
+                legend: {
+                    labels: {
+                        color: "#ffffff"
+                    }
+                }
+            }
+        },
+        plugins: [{
+            id: 'glowEffect',
+            beforeDraw: (chart) => {
+                const {ctx} = chart;
+                ctx.save();
+                ctx.shadowColor = '#06b6d4';
+                ctx.shadowBlur = 35;
+                ctx.shadowOffsetX = 0;
+                ctx.shadowOffsetY = 0;
+            }
+        }]
     });
 </script>
 

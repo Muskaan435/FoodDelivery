@@ -2,18 +2,30 @@
 <html>
 <head>
     <title>Register</title>
-    <link rel="stylesheet" href="../static/styles.css">
+    <link rel="stylesheet" href="../static/registerstyle.css">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<h2>Register</h2>
+<div class="container">
+    <h2>Register</h2>
 
-<form method="POST">
-    <input type="text" name="name" placeholder="Enter Name">
-    <input type="email" name="email" placeholder="Enter Email">
-    <input type="password" name="password" placeholder="Enter Password">
-    <button type="submit">Register</button>
-</form>
+    <form method="POST">
+        <input type="text" name="name" placeholder="Enter Name" required>
+        <input type="email" name="email" placeholder="Enter Email" required>
+        <input type="password" name="password" placeholder="Enter Password" required>
+
+        <button type="submit">Register</button>
+
+        <!-- 👇 ADD THIS -->
+        <p class="login-text">
+            Already have an account? 
+            <a href="/login">Login</a>
+        </p>
+    </form>
+</div>
 
 </body>
 </html>

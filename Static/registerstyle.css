@@ -1,0 +1,119 @@
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* BACKGROUND - FOOD THEME */
+body {
+    height: 100vh;
+    background: linear-gradient(135deg, #ff512f, #dd2476); /* Zomato vibe */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* GLASS CARD */
+.container {
+    backdrop-filter: blur(18px);
+    background: rgba(255, 255, 255, 0.08);
+    padding: 40px;
+    border-radius: 20px;
+    width: 350px;
+    text-align: center;
+
+    border: 1px solid rgba(255, 255, 255, 0.2);
+
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.3),
+        0 0 25px rgba(255, 80, 50, 0.3);
+}
+
+/* TITLE */
+.container h2 {
+    color: #fff;
+    margin-bottom: 25px;
+    font-weight: 600;
+}
+
+/* INPUT */
+.container input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+
+    transition: 0.3s;
+}
+
+/* PLACEHOLDER */
+.container input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* INPUT FOCUS */
+.container input:focus {
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 0 10px rgba(255, 120, 80, 0.8);
+}
+
+/* BUTTON - FOOD STYLE */
+.container button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+
+    border: none;
+    border-radius: 12px;
+
+    background: linear-gradient(135deg, #ff6a00, #ff3c00);
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* BUTTON HOVER */
+.container button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(255, 80, 0, 0.9);
+}
+
+/* 🔥 LOGIN TEXT (NEW) */
+.login-text {
+    margin-top: 18px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 14px;
+}
+
+/* LOGIN LINK */
+.login-text a {
+    color: #ffb3a7;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+/* HOVER EFFECT */
+.login-text a:hover {
+    color: #ffffff;
+    text-shadow: 0 0 8px rgba(255, 120, 80, 0.9);
+}
+
+/* RESPONSIVE */
+@media (max-width: 400px) {
+    .container {
+        width: 90%;
+        padding: 30px;
+    }
+}

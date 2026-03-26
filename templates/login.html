@@ -2,10 +2,12 @@
 <html>
 <head>
     <title>Login</title>
-    <link rel="stylesheet" href="../static/styles.css">
+    <link rel="stylesheet" href="../static/loginstyle.css">
 </head>
 
 <body class="login-page">
+
+
 
 <div class="container">
 
@@ -17,26 +19,27 @@
         <input type="email" name="email" placeholder="Enter Email" required>
 
         <div class="password-box">
-            <input type="password" id="password" name="password" placeholder="Enter Password" required>
+            <input type="password" name="password" placeholder="Enter Password" required>
         </div>
 
         <div class="extra">
-            <label><input type="checkbox"> Remember Me</label>
-            <a href="#">Forgot?</a>
-        </div>
+    <label>
+        <input type="checkbox"> Remember Me
+    </label>
+    <a href="#">Forgot?</a>
+</div>
 
         <button type="submit">Login</button>
+
+        <p class="divider-text">🍔 New here? Create an account</p>
+
+        <a href="/register" class="register-link">
+            <button type="button" class="register-btn">Register</button>
+        </a>
 
     </form>
 
 </div>
-
-<script>
-function togglePassword() {
-    const pass = document.getElementById("password");
-    pass.type = pass.type === "password" ? "text" : "password";
-}
-</script>
 
 </body>
 </html>
