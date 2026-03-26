@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Dashboard</title>
-        <!-- <link rel="stylesheet" href="../static/styles.css"> -->
-        <link rel="stylesheet" href="../static/dashstyle.css">
-    </head>
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="../static/dashstyle.css">
+</head>
 <body>
 
 <!-- HEADER -->
 <div class="header">
     <div class="menu-btn" onclick="toggleMenu()">☰</div>
-    <h2 class="title">Dashboard</h2>
+    <h2 class="title">Welcome Back</h2> <!-- Replaced 'Dashboard' with something more personal -->
 </div>
 
 <!-- SIDEBAR -->
@@ -38,38 +37,59 @@
 <!-- MAIN -->
 <div class="container">
 
-    <!-- small hello -->
     <div class="welcome">
         Hello, <b>{{ name }}</b> 👋
     </div>
 
-<h3>Recommended Restaurants 🎯</h3>
-
-<div class="grid">
-{% for r in restaurants %}
-<div class="card">
-
-    {% set name = r[1].lower() %}
-
-    {% if 'pizza' in name %}
-        <img src="https://via.placeholder.com/400x300">
-    {% elif 'biryani' in name %}
-        <img src="https://source.unsplash.com/400x300/?biryani">
-    {% elif 'burger' in name %}
-        <img src="https://source.unsplash.com/400x300/?burger">
-    {% elif 'cafe' in name %}
-        <img src="https://source.unsplash.com/400x300/?cafe">
+    {% if fav_category %}
+    <h3>Because you like {{ fav_category }} 🍴</h3>
     {% else %}
-        <img src="https://source.unsplash.com/400x300/?restaurant,food">
+    <h3>Top Picks For You 🎯</h3>
     {% endif %}
+    <!-- RECOMMENDED RESTAURANTS -->
+    <div class="grid">
+        {% for r in recommended %}
+        <div class="card">
+            {% set name_lower = r[1].lower() %}
+            {% if 'pizza' in name_lower %}
+                <img src="https://via.placeholder.com/400x300">
+            {% elif 'biryani' in name_lower %}
+                <img src="https://source.unsplash.com/400x300/?biryani">
+            {% elif 'burger' in name_lower %}
+                <img src="https://source.unsplash.com/400x300/?burger">
+            {% elif 'cafe' in name_lower %}
+                <img src="https://source.unsplash.com/400x300/?cafe">
+            {% else %}
+                <img src="https://source.unsplash.com/400x300/?restaurant,food">
+            {% endif %}
 
-    <h3>{{ r[1] }}</h3>
-    <p>{{ r[2] }}</p>
-    <a href="/menu/{{ r[0] }}">View Menu</a>
+            <h3>{{ r[1] }}</h3>
+            <p>{{ r[2] }}</p>
+            <a href="/menu/{{ r[0] }}">View Menu</a>
+        </div>
+        {% endfor %}
+    </div>
 
-</div>
-{% endfor %}
-</div>
+    <!-- OUR RESTAURANTS -->
+    <h3>Our Restaurants 🍽️</h3>
+    <div class="grid">
+        {% for r in our_restaurants[:3] %} <!-- top 3 normal cards -->
+        <div class="card">
+            <img src="https://source.unsplash.com/400x300/?restaurant,food">
+            <h3>{{ r[1] }}</h3>
+            <p>{{ r[2] }}</p>
+            <a href="/menu/{{ r[0] }}">View Menu</a>
+        </div>
+        {% endfor %}
+
+        <!-- View More Card -->
+        <div class="card view-more">
+            <img src="https://source.unsplash.com/400x300/?restaurant,food">
+            <h3>View More</h3>
+            <p>Explore all restaurants</p>
+            <a href="/restaurants">See All</a>
+        </div>
+    </div>
 
 </div>
 
@@ -80,3 +100,4 @@ function toggleMenu() {
 </script>
 
 </body>
+</html>

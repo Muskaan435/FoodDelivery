@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, session
 import mysql.connector
 from MachineLearning.recommend import get_recommendations
+from MachineLearning.recommender import train_model, recommend as ml_recommend
 
 app = Flask(__name__)
 app.secret_key = "secret123" 
@@ -58,13 +59,47 @@ def dashboard():
     if 'user_id' not in session:
         return redirect('/login')
 
-    cursor.execute("SELECT * FROM restaurants order by name asc")
-    data = cursor.fetchall()
+    user_id = session['user_id']
+
+    # 1️⃣ User ka favourite category nikal
+    cursor.execute("""
+        SELECT i.category, COUNT(*) as freq
+        FROM orders o
+        JOIN order_items oi ON o.order_id = oi.order_id
+        JOIN menu i ON oi.item_id = i.item_id
+        WHERE o.user_id = %s
+        GROUP BY i.category
+        ORDER BY freq DESC
+        LIMIT 1
+    """, (user_id,))
+    fav_cat = cursor.fetchone()
+    fav_category = fav_cat[0] if fav_cat else None
+
+    # ML-based recommendation
+    df, sim_df = train_model(cursor)
+    recommended_ids = ml_recommend(user_id, df, sim_df)
+
+    if recommended_ids:
+        format_strings = ','.join(['%s'] * len(recommended_ids))
+        cursor.execute(f"""
+            SELECT restaurant_id, name, location
+            FROM restaurants
+            WHERE restaurant_id IN ({format_strings})
+        """, tuple(recommended_ids))
+        recommended = cursor.fetchall()
+    else:
+        recommended = []
+
+    # All restaurants (optional)
+    cursor.execute("SELECT restaurant_id, name, location FROM restaurants ORDER BY name ASC LIMIT 4")
+    our_restaurants = cursor.fetchall()
 
     return render_template(
         'dashboard.html',
-        restaurants=data,
-        name=session['user_name']
+        recommended=recommended,
+        our_restaurants=our_restaurants,
+        name=session['user_name'],
+        fav_category=fav_category
     )
 
 @app.route('/recommend')
