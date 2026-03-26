@@ -58,7 +58,14 @@ def dashboard():
     if 'user_id' not in session:
         return redirect('/login')
 
-    return render_template('dashboard.html', name=session['user_name'])
+    cursor.execute("SELECT * FROM restaurants order by name asc")
+    data = cursor.fetchall()
+
+    return render_template(
+        'dashboard.html',
+        restaurants=data,
+        name=session['user_name']
+    )
 
 @app.route('/recommend')
 def recommend():

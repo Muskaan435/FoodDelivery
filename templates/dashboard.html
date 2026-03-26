@@ -1,134 +1,82 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Dashboard</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f4f6f8;
-            margin: 0;
-        }
-
-        /* Top Bar */
-        .header {
-            background: #ffffff;
-            padding: 15px 30px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .header h1 {
-            font-size: 20px;
-            color: #333;
-        }
-
-        .logout {
-            color: #e63946;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        /* Main Container */
-        .container {
-            max-width: 900px;
-            margin: 40px auto;
-            padding: 20px;
-        }
-
-        /* Grid */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-        }
-
-        /* Card */
-        .card {
-            background: #ffffff;
-            padding: 25px;
-            border-radius: 12px;
-            text-align: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            transition: 0.2s;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-        }
-
-        .card a {
-            text-decoration: none;
-            color: #333;
-            font-weight: bold;
-            display: block;
-        }
-
-        .card span {
-            display: block;
-            font-size: 28px;
-            margin-bottom: 10px;
-        }
-
-        /* Welcome */
-        .welcome {
-            margin-bottom: 25px;
-            font-size: 22px;
-            color: #444;
-        }
-
-    </style>
-</head>
-
+    <head>
+        <title>Dashboard</title>
+        <!-- <link rel="stylesheet" href="../static/styles.css"> -->
+        <link rel="stylesheet" href="../static/dashstyle.css">
+    </head>
 <body>
 
-    <!-- Header -->
-    <div class="header">
-        <h1>Dashboard</h1>
-        <a href="/logout" class="logout">Logout</a>
+<!-- HEADER -->
+<div class="header">
+    <div class="menu-btn" onclick="toggleMenu()">☰</div>
+    <h2 class="title">Dashboard</h2>
+</div>
+
+<!-- SIDEBAR -->
+<div id="sidebar" class="sidebar">
+
+    <div class="sidebar-top">
+        <span class="close-btn" onclick="toggleMenu()">✖</span>
+        <div class="user-info">
+            Hello, <b>{{ name }}</b> 👋
+        </div>
     </div>
 
-    <!-- Content -->
-    <div class="container">
-
-        <div class="welcome">
-            Welcome, <b>{{ name }}</b> 👋
-        </div>
-
-        <div class="grid">
-
-            <div class="card">
-                <a href="/restaurants">
-                    <span>🍽️</span>
-                    Restaurants
-                </a>
-            </div>
-
-            <div class="card">
-                <a href="/recommend">
-                    <span>🎯</span>
-                    Recommendations
-                </a>
-            </div>
-
-            <div class="card">
-                <a href="/orders">
-                    <span>📦</span>
-                    My Orders
-                </a>
-            </div>
-
-            <div class="card">
-                <a href="/analytics">
-                    <span>📊</span>
-                    Analytics
-                </a>
-            </div>
-
-        </div>
-
+    <div class="menu-items">
+        <a href="/orders">📦 Previous Orders</a>
+        <a href="/restaurants">🍽️ Restaurants</a>
+        <a href="/analytics">📊 Analytics</a>
     </div>
+
+    <div class="logout-container">
+        <a href="/logout" class="logout">🚪 Logout</a>
+    </div>
+
+</div>
+
+<!-- MAIN -->
+<div class="container">
+
+    <!-- small hello -->
+    <div class="welcome">
+        Hello, <b>{{ name }}</b> 👋
+    </div>
+
+<h3>Recommended Restaurants 🎯</h3>
+
+<div class="grid">
+{% for r in restaurants %}
+<div class="card">
+
+    {% set name = r[1].lower() %}
+
+    {% if 'pizza' in name %}
+        <img src="https://via.placeholder.com/400x300">
+    {% elif 'biryani' in name %}
+        <img src="https://source.unsplash.com/400x300/?biryani">
+    {% elif 'burger' in name %}
+        <img src="https://source.unsplash.com/400x300/?burger">
+    {% elif 'cafe' in name %}
+        <img src="https://source.unsplash.com/400x300/?cafe">
+    {% else %}
+        <img src="https://source.unsplash.com/400x300/?restaurant,food">
+    {% endif %}
+
+    <h3>{{ r[1] }}</h3>
+    <p>{{ r[2] }}</p>
+    <a href="/menu/{{ r[0] }}">View Menu</a>
+
+</div>
+{% endfor %}
+</div>
+
+</div>
+
+<script>
+function toggleMenu() {
+    document.getElementById("sidebar").classList.toggle("active");
+}
+</script>
 
 </body>
-</html>
