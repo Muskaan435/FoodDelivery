@@ -17,9 +17,10 @@
 
     <div class="sidebar-top">
         <span class="close-btn" onclick="toggleMenu()">✖</span>
-        <div class="user-info">
-            Hello, <b>{{ name }}</b> 👋
-        </div>
+    </div>
+
+    <div class="user-info">
+        Hello, <b>{{ name }}</b> 👋
     </div>
 
     <div class="menu-items">
@@ -48,7 +49,8 @@
     {% endif %}
     <!-- RECOMMENDED RESTAURANTS -->
     <div class="grid">
-        {% for r in recommended %}
+    {% for r in recommended %}
+    <a href="/menu/{{ r[0] }}" class="card-link">
         <div class="card">
             {% set name_lower = r[1].lower() %}
             {% if 'pizza' in name_lower %}
@@ -65,31 +67,34 @@
 
             <h3>{{ r[1] }}</h3>
             <p>{{ r[2] }}</p>
-            <a href="/menu/{{ r[0] }}">View Menu</a>
         </div>
-        {% endfor %}
-    </div>
+    </a>
+    {% endfor %}
+</div>
 
     <!-- OUR RESTAURANTS -->
     <h3>Our Restaurants 🍽️</h3>
-    <div class="grid">
-        {% for r in our_restaurants[:3] %} <!-- top 3 normal cards -->
-        <div class="card">
+
+<div class="scroll-container">
+
+    {% for r in our_restaurants %}
+    <a href="/menu/{{ r[0] }}" class="card-link">
+        <div class="scroll-card">
             <img src="https://source.unsplash.com/400x300/?restaurant,food">
             <h3>{{ r[1] }}</h3>
             <p>{{ r[2] }}</p>
-            <a href="/menu/{{ r[0] }}">View Menu</a>
         </div>
-        {% endfor %}
+    </a>
+    {% endfor %}
 
-        <!-- View More Card -->
-        <div class="card view-more">
-            <img src="https://source.unsplash.com/400x300/?restaurant,food">
-            <h3>View More</h3>
-            <p>Explore all restaurants</p>
-            <a href="/restaurants">See All</a>
+    <!-- VIEW MORE -->
+    <a href="/restaurants" class="card-link">
+        <div class="scroll-card view-more">
+            <h3>View More →</h3>
         </div>
-    </div>
+    </a>
+
+</div>
 
 </div>
 

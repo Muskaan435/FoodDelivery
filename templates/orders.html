@@ -1,5 +1,24 @@
-<h2>Your Orders 🛒</h2>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Your Orders</title>
+    <link rel="stylesheet" href="/static/orderstyle.css">
+</head>
+<body>
 
+<h2 class="title">Your Orders 🛒</h2>
+
+<div class="orders-container">
 {% for order in orders %}
-    <p>Order ID: {{ order[0] }} | Item: {{ order[1] }} | Qty: {{ order[2] }}</p>
+    <div class="order-card">
+        <p><span>Order ID:</span> {{ order[0] }}</p>
+        <p><span>Item:</span> {{ order[1] }}</p>
+        <p><span>Price:</span> ₹{{ order[2] }}</p>
+        <p><span>Qty:</span> {{ order[3] }}</p>
+        <p class="total">Total: ₹{{ order[2] * order[3] }}</p>
+    </div>
 {% endfor %}
+</div>
+
+</body>
+</html>

@@ -2,84 +2,125 @@
 <html>
 <head>
     <title>Analytics</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='analyticsstyle.css') }}">
+    <link rel="stylesheet" href="../static/analyticsstyle.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
 </head>
 <body>
-
+<a href="/dashboard" class="back-btn">← Back</a>
 <h1>Analytics</h1>
 
 <div class="dashboard">
 
-    <!-- LEFT SIDE -->
+    <!-- LEFT -->
     <div class="left">
-        <div class="card">
-            <h3>Total Users: {{ users }}</h3>
-            <h3>Total Orders: {{ orders }}</h3>
+
+        <!-- STATS -->
+        <div class="stats">
+            <div class="stat-card">
+                <h2 class="counter" data-target="{{ users }}">0</h2>
+                <p>Total Users</p>
+            </div>
+
+            <div class="stat-card">
+                <h2 class="counter" data-target="{{ orders }}">0</h2>
+                <p>Total Orders</p>
+            </div>
         </div>
 
+        <!-- TOP ITEMS -->
         <div class="card">
-            <h3>Most Popular Item:</h3>
-            <p>
-                {% if popular %}
-                    {{ popular[0] }} ({{ popular[1] }} orders)
-                {% else %}
-                    No data available
-                {% endif %}
-            </p>
+            <h3>🔥 Trending Now</h3>
+
+            {% if popular_items %}
+                {% for item in popular_items %}
+                    <div class="item-row">
+                        <span>{{ item[0] }}</span>
+                        <b>{{ item[1] }}</b>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No data available</p>
+            {% endif %}
         </div>
+
     </div>
 
-    <!-- RIGHT SIDE -->
+    <!-- RIGHT -->
     <div class="right">
         <canvas id="myChart"></canvas>
     </div>
 
 </div>
 
-<!-- DATA -->
+<!-- DATA PASS -->
 <div id="data"
-     data-value="{{ popular[1] }}">
+     data-items='{{ popular_items | tojson }}'>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 <script>
-    var dataDiv = document.getElementById("data");
-    var value = parseInt(dataDiv.getAttribute("data-value"));
+    // ===== CHART =====
+    const dataDiv = document.getElementById("data");
+    const rawData = JSON.parse(dataDiv.getAttribute("data-items") || "[]");
 
-    var ctx = document.getElementById('myChart').getContext('2d');
+    const labels = rawData.map(item => item[0]);
+    const values = rawData.map(item => item[1]);
 
-    new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-            labels: ['{{ popular[0] }}'],
-            datasets: [{
-                data: [value],
-                backgroundColor: ['#06b6d4'],
-                borderWidth: 0
-            }]
+    const ctx = document.getElementById('myChart').getContext('2d');
+
+new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+        labels: labels,
+        datasets: [{
+            data: values,
+            backgroundColor: ['#06b6d4', '#f59e0b', '#ef4444'],
+            borderWidth: 0
+        }]
+    },
+    options: {
+        responsive: true,
+
+        // 🔥 YAHI ADD KARNA THA (animation)
+        animation: {
+            animateRotate: true,
+            animateScale: true,
+            duration: 1200,
+            easing: 'easeOutCubic'
         },
-        options: {
-            cutout: '70%',
-            plugins: {
-                legend: {
-                    labels: {
-                        color: "#ffffff"
+
+        cutout: '70%',
+        plugins: {
+            legend: {
+                labels: {
+                    color: "#ffffff",
+                    font: {
+                        size: 20
                     }
                 }
             }
-        },
-        plugins: [{
-            id: 'glowEffect',
-            beforeDraw: (chart) => {
-                const {ctx} = chart;
-                ctx.save();
-                ctx.shadowColor = '#06b6d4';
-                ctx.shadowBlur = 35;
-                ctx.shadowOffsetX = 0;
-                ctx.shadowOffsetY = 0;
+        }
+    }
+});
+
+    // ===== COUNTER ANIMATION =====
+    const counters = document.querySelectorAll('.counter');
+
+    counters.forEach(counter => {
+        const update = () => {
+            const target = +counter.getAttribute('data-target');
+            const current = +counter.innerText;
+
+            const increment = target / 40;
+
+            if (current < target) {
+                counter.innerText = Math.ceil(current + increment);
+                setTimeout(update, 125);
+            } else {
+                counter.innerText = target;
             }
-        }]
+        };
+
+        update();
     });
 </script>
 

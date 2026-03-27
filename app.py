@@ -14,7 +14,8 @@ db = mysql.connector.connect(
     database="food_delivery"
 )
 
-cursor = db.cursor()
+cursor = db.cursor(buffered=True)
+
 @app.route('/')
 def home():
     return render_template('index.html')
@@ -152,15 +153,14 @@ def orders():
 
     user_id = session['user_id']
 
-    query = """
-    SELECT o.order_id, m.item_name, oi.quantity
-    FROM orders o
-    JOIN order_items oi ON o.order_id = oi.order_id
-    JOIN menu m ON oi.item_id = m.item_id
-    WHERE o.user_id = %s
-    """
+    cursor.execute("""
+        SELECT o.order_id, m.item_name, m.price, oi.quantity
+        FROM orders o
+        JOIN order_items oi ON o.order_id = oi.order_id
+        JOIN menu m ON oi.item_id = m.item_id
+        WHERE o.user_id = %s
+    """, (user_id,))
 
-    cursor.execute(query, (user_id,))
     data = cursor.fetchall()
 
     return render_template('orders.html', orders=data)
@@ -185,15 +185,15 @@ def analytics():
         JOIN menu m ON oi.item_id = m.item_id
         GROUP BY oi.item_id
         ORDER BY count DESC
-        LIMIT 1
+        LIMIT 3
     """)
-    popular_item = cursor.fetchone()
+    popular_items = cursor.fetchall()
 
     return render_template(
         'analytics.html',
         users=total_users,
         orders=total_orders,
-        popular=popular_item
+        popular_items=popular_items
     )
 
 if __name__ == '__main__':

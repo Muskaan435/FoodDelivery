@@ -1,0 +1,44 @@
+body {
+    font-family: Arial;
+    background: #f4f6f9;
+}
+
+.title {
+    text-align: center;
+    margin: 20px;
+    font-size: 28px;
+}
+
+.orders-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.order-card {
+    background: white;
+    padding: 20px;
+    width: 260px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: 0.3s;
+}
+
+.order-card:hover {
+    transform: translateY(-5px);
+}
+
+.order-card p {
+    margin: 8px 0;
+}
+
+.order-card span {
+    font-weight: bold;
+}
+
+.total {
+    margin-top: 10px;
+    font-weight: bold;
+    color: green;
+}
