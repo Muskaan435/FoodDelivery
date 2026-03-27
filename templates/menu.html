@@ -4,21 +4,117 @@
     <title>Menu</title>
     <link rel="stylesheet" href="../static/menustyle.css">
 </head>
+
 <body>
 
-<h2>Menu 🍕</h2>
+<div class="header">
+    
+    <div>
+        <a href="/dashboard" class="back-btn">⬅ Back</a>
+    </div>
+
+    <h2>Menu 🍕</h2>
+
+    <div class="cart-icon" onclick="openCart()">
+        🛒 <span id="cart-count">0</span>
+    </div>
+
+</div>
 
 <div class="card-container">
     {% for item in items %}
     <div class="card">
         <h3>{{ item[2] }}</h3>
         <p>Price: ₹{{ item[3] }}</p>
-        <!-- Buttons -->
-        <a href="/add_to_cart/{{ item[0] }}" class="btn">Add to Cart</a>
-        <a href="/order/{{ item[0] }}" class="btn order">Order Now</a>
+
+        <!-- FIXED BUTTONS -->
+    <a href="#" onclick="addToCart({{ item[0] }}, `{{ item[2] }}`, {{ item[3] }})" class="btn">Add to Cart</a>
+        <a href="#" onclick="quickOrder('{{ item[2] }}')" class="btn order">Order Now</a>
     </div>
     {% endfor %}
 </div>
 
+<!-- CART MODAL -->
+<div id="cart-modal" class="modal">
+    <div class="modal-content">
+        <h3>Your Cart</h3>
+        <div id="cart-items"></div>
+        <h4 id="total-price"></h4>
+        <br>
+        <button onclick="placeOrder()">Place Order</button>
+    </div>
+</div>
+
+<!-- POPUP -->
+<div id="popup" class="popup"></div>
+
+<script>
+let cart = [];
+
+/* ADD TO CART */
+function addToCart(id, name, price) {
+    cart.push({id, name, price});
+    document.getElementById("cart-count").innerText = cart.length;
+    showPopup(name + " added 🛒");
+}
+
+/* OPEN CART */
+function openCart() {
+    let itemsDiv = document.getElementById("cart-items");
+    itemsDiv.innerHTML = "";
+
+    let total = 0;
+
+    cart.forEach(item => {
+        itemsDiv.innerHTML += `<p>${item.name} - ₹${item.price}</p>`;
+        total += item.price;
+    });
+
+    document.getElementById("total-price").innerText = "Total: ₹" + total;
+    document.getElementById("cart-modal").style.display = "block";
+}
+
+/* PLACE ORDER */
+function placeOrder() {
+
+    fetch('/place_order', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ cart: cart })
+    })
+    .then(res => res.json())
+    .then(data => {
+        showPopup("Order Placed ✅");
+
+        cart = [];
+        document.getElementById("cart-count").innerText = 0;
+        document.getElementById("cart-modal").style.display = "none";
+    })
+    .catch(err => {
+        console.error(err);
+        showPopup("Error placing order ❌");
+    });
+}
+
+/* QUICK ORDER */
+function quickOrder(item) {
+    showPopup(item + " ordered 🍽️");
+}
+
+/* POPUP */
+function showPopup(msg) {
+    let popup = document.getElementById("popup");
+    popup.innerText = msg;
+    popup.style.display = "block";
+
+    setTimeout(() => {
+        popup.style.display = "none";
+    }, 1500);
+}
+</script>
+
 </body>
 </html>
+```

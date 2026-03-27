@@ -195,6 +195,31 @@ def analytics():
         orders=total_orders,
         popular_items=popular_items
     )
+@app.route('/place_order', methods=['POST'])
+def place_order():
+    if 'user_id' not in session:
+        return "Not logged in", 401
+
+    data = request.get_json()
+    cart = data.get('cart')
+
+    user_id = session['user_id']
+
+    # Create order
+    cursor.execute("INSERT INTO orders (user_id) VALUES (%s)", (user_id,))
+    db.commit()
+    order_id = cursor.lastrowid
+
+    # Insert all items
+    for item in cart:
+        cursor.execute(
+            "INSERT INTO order_items (order_id, item_id, quantity) VALUES (%s, %s, %s)",
+            (order_id, item['id'], 1)
+        )
+
+    db.commit()
+
+    return {"message": "Order placed successfully"}
 
 if __name__ == '__main__':
     app.run(debug=True)
