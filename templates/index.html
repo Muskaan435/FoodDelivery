@@ -2,14 +2,68 @@
 <html>
 <head>
     <title>Food Delivery</title>
-    <link rel="stylesheet" href="../static/styles.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
 
-    <h1>Food Delivery App 🍔</h1>
+<!-- NAVBAR -->
+<div class="navbar">
+    <div class="logo">Food Delivery 🍔</div>
 
-    <a href="/register">Register</a>
-    <a href="/login">Login</a>
+    <div class="nav-buttons">
+        <a href="/login" class="btn-outline">Login</a>
+        <a href="/register" class="btn-outline">Register</a>
+    </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+
+    <!-- LEFT IMAGE -->
+    <div class="hero-left">
+        <img src="{{ url_for('static', filename='images/biryani.png') }}">
+    </div>
+
+    <!-- CENTER -->
+    <div class="hero-center">
+        <h1>Order food from your favorite Restaurants 🍕</h1>
+        <p>Fast delivery at your doorstep</p>
+
+        <!-- SEARCH -->
+        <form action="/" method="POST" class="search-box">
+            <input type="text" name="search" value="{{ query }}" placeholder="Search restaurants or dishes..." required>
+            <button type="submit">Search</button>
+        </form>
+
+        <!-- RESULTS -->
+        {% if results %}
+        <div class="results">
+
+            <h2>Results for "{{ query }}"</h2>
+
+            {% for item in results %}
+            <div class="card">
+                <div class="left">
+                    <h3>{{ item.item_name }}</h3>
+                    <p>{{ item.restaurant_name }}</p>
+                </div>
+                <div class="price">
+                    ₹{{ item.price }}
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+        {% endif %}
+
+    </div>
+
+    <!-- RIGHT IMAGE -->
+    <div class="hero-right">
+        <img src="{{ url_for('static', filename='images/pizza.png') }}">
+    </div>
+
+</div>
 
 </body>
 </html>

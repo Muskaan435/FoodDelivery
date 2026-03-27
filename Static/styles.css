@@ -1,234 +1,151 @@
+/* RESET */
 * {
-    box-sizing: border-box;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
 }
 
-/* Body Layout Fix (default for all pages) */
+/* BODY */
 body {
-    font-family: Arial, sans-serif;
-    background: #f5f5f5;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    min-height: 100vh;
+    background: #EAF7F0;
+    color: #1B4332;
 }
 
-/* Headings */
-h1, h2 {
-    color: #333;
-    margin-bottom: 15px;
-    text-align: center;
-}
-
-/* Form Card */
-form {
-    background: #fff;
-    padding: 25px;
-    width: 300px;
-    border-radius: 12px;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
-    text-align: center;
-}
-
-/* Inputs */
-input {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    outline: none;
-    transition: 0.2s;
-}
-
-/* Input Focus */
-input:focus {
-    border-color: #ff6600;
-    box-shadow: 0 0 5px rgba(255,102,0,0.3);
-}
-
-/* Button */
-button {
-    width: 100%;
-    padding: 10px;
-    background: #ff6600;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: 0.2s;
-}
-
-/* Button Hover */
-button:hover {
-    background: #e65c00;
-    transform: scale(1.02);
-}
-
-/* Links */
-a {
-    display: block;
-    margin-top: 12px;
-    color: #ff6600;
-    text-decoration: none;
-    font-weight: 500;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
-/* Text blocks */
-p {
-    background: #fff;
-    padding: 10px;
-    margin: 8px 0;
-    border-radius: 6px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.05);
-}
-
-h1 {
-    margin-bottom: 20px;
-}
-
-h3 {
-    margin: 10px 0;
-}
-
-/* ================= LOGIN PAGE ================= */
-
-.login-page {
-    background: linear-gradient(135deg, #ff5a3c, #ff8a65);
-}
-
-.login-page .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-/* 👨‍🍳 Chef */
-.login-page .chef {
-    width: 110px;
-    margin-bottom: -50px;
-    z-index: 2;
-}
-
-/* Card */
-.login-page .card {
-    background: white;
-    padding: 30px;
-    width: 320px;
-    border-radius: 20px;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-    text-align: center;
-}
-
-/* Subtitle */
-.login-page .subtitle {
-    font-size: 13px;
-    color: #666;
-    background: #f3f3f3;
-    padding: 6px 12px;
-    border-radius: 10px;
-    margin-bottom: 15px;
-    display: inline-block;
-}
-
-/* Inputs */
-.login-page input {
-    width: 100%;
-    padding: 12px;
-    margin: 10px 0;
-    border-radius: 12px;
-    border: none;
-    background: #f1f1f1;
-}
-
-/* Password */
-.password-box {
-    position: relative;
-}
-
-.eye {
+/* NAVBAR */
+.navbar {
     position: absolute;
-    right: 15px;
-    top: 12px;
-    cursor: pointer;
-}
-
-/* Extra */
-.login-page .extra {
+    top: 20px;
+    left: 40px;
+    right: 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 12px;
-    margin: 10px 0;
 }
 
-.login-page .extra label {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.login-page .extra a {
-    color: #ff5a3c;
-    text-decoration: none;
-}
-
-/* Button */
-.login-page button {
-    width: 100%;
-    padding: 12px;
-    border-radius: 20px;
-    border: none;
-    background: #ff5a3c;
-    color: white;
+.logo {
+    font-size: 22px;
     font-weight: bold;
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.btn-outline {
+    padding: 8px 18px;
+    border: 2px solid #2ecc71;
+    border-radius: 20px;
+    text-decoration: none;
+    color: #2ecc71;
+}
+
+.btn-outline:hover {
+    background: #2ecc71;
+    color: white;
+}
+
+/* HERO */
+.hero {
+    display: flex;
+    align-items: flex-start; /* 🔥 IMPORTANT FIX */
+    justify-content: space-between;
+    padding: 80px;
+}
+
+/* IMAGES FIX */
+.hero-left,
+.hero-right {
+    flex: 0 0 auto;
+}
+
+.hero-left img {
+    width: 320px;
+}
+
+.hero-right img {
+    width: 240px;
+}
+
+/* CENTER */
+.hero-center {
+    text-align: center;
+    max-width: 600px;
+}
+
+/* TEXT */
+.hero-center h1 {
+    font-size: 40px;
+    margin-bottom: 15px;
+}
+
+.hero-center p {
+    color: #555;
+    margin-bottom: 25px;
+}
+
+/* SEARCH */
+.search-box {
+    display: flex;
+    background: white;
+    border-radius: 50px;
+    overflow: hidden;
+    max-width: 450px;
+    margin: auto;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.search-box input {
+    flex: 1;
+    border: none;
+    padding: 15px;
+    outline: none;
+}
+
+.search-box button {
+    background: #2ecc71;
+    border: none;
+    padding: 15px 25px;
+    color: white;
     cursor: pointer;
 }
 
-.login-page button:hover {
-    transform: scale(1.05);
+.search-box button:hover {
+    background: #27ae60;
 }
 
-/* Divider */
-.divider {
-    margin: 15px 0;
+/* RESULTS */
+.results {
+    margin-top: 15px; /* 🔥 no gap */
+}
+
+/* CARD */
+.card {
+    width: 450px;
+    background: #f5f5f5;
+    border-radius: 12px;
+    padding: 15px 20px;
+    margin: 10px auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-left: 5px solid #2ecc71;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+/* LEFT */
+.left h3 {
+    font-size: 16px;
+}
+
+.left p {
+    font-size: 13px;
     color: #666;
-    font-size: 12px;
 }
 
-/* ===== LOGIN FIX FINAL ===== */
-
-.login-page .container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 40px;
-}
-
-.login-page .left {
-    background: #ff5a3c;
-    padding: 20px;
-    border-radius: 20px;
-}
-
-.login-page .chef {
-    width: 120px;
-}
-
-
-/* Fix Remember Me */
-.login-page .extra label {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    white-space: nowrap;
+/* PRICE */
+.price {
+    font-weight: bold;
+    color: #ff6b00;
 }
