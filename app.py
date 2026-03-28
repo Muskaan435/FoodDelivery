@@ -76,7 +76,7 @@ def dashboard():
 
     user_id = session['user_id']
 
-    # Favourite category
+    # ================= FAVOURITE CATEGORY =================
     cursor.execute("""
         SELECT i.category, COUNT(*) as freq
         FROM orders o
@@ -87,32 +87,45 @@ def dashboard():
         ORDER BY freq DESC
         LIMIT 1
     """, (user_id,))
+    
     fav = cursor.fetchone()
     fav_category = fav[0] if fav else None
 
-    # ML Recommendation
-    df, sim_df = train_model(cursor)
-    recommended_ids = ml_recommend(user_id, df, sim_df)
+    # ================= PERSONALIZED RECOMMENDATION =================
+    cursor.execute("""
+        SELECT r.restaurant_id, r.name, r.location, COUNT(*) as freq
+        FROM orders o
+        JOIN order_items oi ON o.order_id = oi.order_id
+        JOIN menu m ON oi.item_id = m.item_id
+        JOIN restaurants r ON m.restaurant_id = r.restaurant_id
+        WHERE o.user_id = %s
+        GROUP BY r.restaurant_id
+        ORDER BY freq DESC
+        LIMIT 3
+    """, (user_id,))
 
-    if recommended_ids:
-        format_strings = ','.join(['%s'] * len(recommended_ids))
-        cursor.execute(f"""
+    recommended = cursor.fetchall()
+
+    # ================= NEW USER FALLBACK =================
+    if not recommended:
+        cursor.execute("""
             SELECT restaurant_id, name, location
             FROM restaurants
-            WHERE restaurant_id IN ({format_strings})
-        """, tuple(recommended_ids))
+            ORDER BY RAND()
+            LIMIT 4
+        """)
         recommended = cursor.fetchall()
-    else:
-        recommended = []
 
-    # fallback restaurants
+    # ================= OUR RESTAURANTS =================
     cursor.execute("""
         SELECT restaurant_id, name, location 
         FROM restaurants 
-        ORDER BY name ASC LIMIT 4
+        ORDER BY name ASC 
+        LIMIT 4
     """)
     our_restaurants = cursor.fetchall()
 
+    # ================= RENDER =================
     return render_template(
         'dashboard.html',
         recommended=recommended,
