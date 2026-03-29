@@ -18,24 +18,49 @@ db = mysql.connector.connect(
 
 cursor = db.cursor(buffered=True)
 
-# ================= HOME =================
-@app.route('/')
+# ================= HOME + SEARCH =================
+@app.route('/', methods=['GET', 'POST'])
 def home():
-    return render_template('index.html')
+    query = ""
+    results = []
 
-# ================= AUTH =================
+    if request.method == 'POST':
+        query = request.form.get('search')
+
+        print("SEARCH:", query)
+
+        # ✅ separate cursor for dictionary
+        search_cursor = db.cursor(dictionary=True)
+
+        search_cursor.execute("""
+            SELECT r.name AS restaurant_name, m.item_name, m.price
+            FROM restaurants r
+            JOIN menu m ON r.restaurant_id = m.restaurant_id
+            WHERE 
+                LOWER(m.item_name) LIKE %s
+                OR LOWER(r.name) LIKE %s
+        """, (f"%{query.lower()}%", f"%{query.lower()}%"))
+
+        results = search_cursor.fetchall()
+
+        print("RESULTS:", results)
+
+    return render_template('index.html', results=results, query=query)
+
+# ================= REGISTER =================
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        name = request.form['name']
-        email = request.form['email']
-        password = request.form['password']
+        name = request.form.get('name')
+        email = request.form.get('email')
+        password = request.form.get('password')
 
         cursor.execute(
             "INSERT INTO users (name, email, password) VALUES (%s, %s, %s)",
             (name, email, password)
         )
         db.commit()
+
         return redirect('/login')
 
     return render_template('register.html')
@@ -44,8 +69,8 @@ def register():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        email = request.form['email']
-        password = request.form['password']
+        email = request.form.get('email')
+        password = request.form.get('password')
 
         cursor.execute(
             "SELECT * FROM users WHERE email=%s AND password=%s",
@@ -57,8 +82,8 @@ def login():
             session['user_id'] = user[0]
             session['user_name'] = user[1]
             return redirect('/dashboard')
-
-        return "Invalid credentials"
+        else:
+            return "Invalid credentials ❌"
 
     return render_template('login.html')
 
@@ -68,7 +93,7 @@ def logout():
     session.clear()
     return redirect('/')
 
-# ================= DASHBOARD (ML + DATA) =================
+# ================= DASHBOARD =================
 @app.route('/dashboard')
 def dashboard():
     if 'user_id' not in session:
@@ -76,7 +101,7 @@ def dashboard():
 
     user_id = session['user_id']
 
-    # ================= FAVOURITE CATEGORY =================
+    # Favourite category
     cursor.execute("""
         SELECT i.category, COUNT(*) as freq
         FROM orders o
@@ -91,7 +116,7 @@ def dashboard():
     fav = cursor.fetchone()
     fav_category = fav[0] if fav else None
 
-    # ================= PERSONALIZED RECOMMENDATION =================
+    # Personalized recommendation
     cursor.execute("""
         SELECT r.restaurant_id, r.name, r.location, COUNT(*) as freq
         FROM orders o
@@ -106,7 +131,7 @@ def dashboard():
 
     recommended = cursor.fetchall()
 
-    # ================= NEW USER FALLBACK =================
+    # New user fallback
     if not recommended:
         cursor.execute("""
             SELECT restaurant_id, name, location
@@ -116,7 +141,7 @@ def dashboard():
         """)
         recommended = cursor.fetchall()
 
-    # ================= OUR RESTAURANTS =================
+    # Our restaurants
     cursor.execute("""
         SELECT restaurant_id, name, location 
         FROM restaurants 
@@ -125,7 +150,6 @@ def dashboard():
     """)
     our_restaurants = cursor.fetchall()
 
-    # ================= RENDER =================
     return render_template(
         'dashboard.html',
         recommended=recommended,
@@ -154,7 +178,7 @@ def menu(restaurant_id):
     items = cursor.fetchall()
     return render_template('menu.html', items=items)
 
-# ================= SINGLE ITEM ORDER =================
+# ================= SINGLE ORDER =================
 @app.route('/order/<int:item_id>')
 def order(item_id):
     if 'user_id' not in session:
@@ -225,18 +249,15 @@ def analytics():
 
     user_id = session['user_id']
 
-    # 👤 Total users (optional - agar dikhana hai)
     cursor.execute("SELECT COUNT(*) FROM users")
     total_users = cursor.fetchone()[0]
 
-    # 📦 Total orders (sirf logged-in user ke)
     cursor.execute(
         "SELECT COUNT(*) FROM orders WHERE user_id = %s",
         (user_id,)
     )
     total_orders = cursor.fetchone()[0]
 
-    # 🔥 Top 3 favourite items (user ke)
     cursor.execute("""
         SELECT m.item_name, COUNT(*) as count
         FROM order_items oi
@@ -252,7 +273,7 @@ def analytics():
 
     return render_template(
         'analytics.html',
-        users=total_users,      # optional (remove if not needed)
+        users=total_users,
         orders=total_orders,
         popular_items=popular_items
     )
