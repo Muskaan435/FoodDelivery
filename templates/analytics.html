@@ -5,9 +5,11 @@
     <link rel="stylesheet" href="../static/analyticsstyle.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1"></script>
 </head>
+
 <body>
+
 <a href="/dashboard" class="back-btn">← Back</a>
-<h1>Analytics</h1>
+<h1>Your Analytics</h1>
 
 <div class="dashboard">
 
@@ -16,20 +18,17 @@
 
         <!-- STATS -->
         <div class="stats">
-            <div class="stat-card">
-                <h2 class="counter" data-target="{{ users }}">0</h2>
-                <p>Total Users</p>
-            </div>
 
             <div class="stat-card">
                 <h2 class="counter" data-target="{{ orders }}">0</h2>
-                <p>Total Orders</p>
+                <p>Your Orders</p>
             </div>
+
         </div>
 
         <!-- TOP ITEMS -->
         <div class="card">
-            <h3>🔥 Trending Now</h3>
+            <h3>🔥 Your Top Picks</h3>
 
             {% if popular_items %}
                 {% for item in popular_items %}
@@ -58,7 +57,8 @@
 </div>
 
 <script>
-    // ===== CHART =====
+
+    // 📊 CHART
     const dataDiv = document.getElementById("data");
     const rawData = JSON.parse(dataDiv.getAttribute("data-items") || "[]");
 
@@ -67,42 +67,40 @@
 
     const ctx = document.getElementById('myChart').getContext('2d');
 
-new Chart(ctx, {
-    type: 'doughnut',
-    data: {
-        labels: labels,
-        datasets: [{
-            data: values,
-            backgroundColor: ['#06b6d4', '#f59e0b', '#ef4444'],
-            borderWidth: 0
-        }]
-    },
-    options: {
-        responsive: true,
-
-        // 🔥 YAHI ADD KARNA THA (animation)
-        animation: {
-            animateRotate: true,
-            animateScale: true,
-            duration: 1200,
-            easing: 'easeOutCubic'
+    new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: labels,
+            datasets: [{
+                data: values,
+                backgroundColor: ['#06b6d4', '#f59e0b', '#ef4444'],
+                borderWidth: 0
+            }]
         },
-
-        cutout: '70%',
-        plugins: {
-            legend: {
-                labels: {
-                    color: "#ffffff",
-                    font: {
-                        size: 20
+        options: {
+            responsive: true,
+            animation: {
+                animateRotate: true,
+                animateScale: true,
+                duration: 1200,
+                easing: 'easeOutCubic'
+            },
+            cutout: '70%',
+            plugins: {
+                legend: {
+                    labels: {
+                        color: "#ffffff",
+                        font: {
+                            size: 16
+                        }
                     }
                 }
             }
         }
-    }
-});
+    });
 
-    // ===== COUNTER ANIMATION =====
+
+    // 🔢 COUNTER ANIMATION
     const counters = document.querySelectorAll('.counter');
 
     counters.forEach(counter => {
@@ -114,7 +112,7 @@ new Chart(ctx, {
 
             if (current < target) {
                 counter.innerText = Math.ceil(current + increment);
-                setTimeout(update, 125);
+                setTimeout(update, 50);
             } else {
                 counter.innerText = target;
             }
@@ -122,6 +120,7 @@ new Chart(ctx, {
 
         update();
     });
+
 </script>
 
 </body>

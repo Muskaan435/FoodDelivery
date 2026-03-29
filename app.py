@@ -40,7 +40,7 @@ def register():
 
     return render_template('register.html')
 
-
+# ================= LOGIN =================
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -62,7 +62,7 @@ def login():
 
     return render_template('login.html')
 
-
+# ================= LOGOUT =================
 @app.route('/logout')
 def logout():
     session.clear()
