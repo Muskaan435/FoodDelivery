@@ -27,26 +27,42 @@ def home():
     if request.method == 'POST':
         query = request.form.get('search')
 
-        print("SEARCH:", query)
+        if query:
+            search_cursor = db.cursor(dictionary=True)
 
-        # ✅ separate cursor for dictionary
-        search_cursor = db.cursor(dictionary=True)
+            search_term = "%" + query + "%"
 
-        search_cursor.execute("""
-            SELECT r.name AS restaurant_name, m.item_name, m.price
-            FROM restaurants r
-            JOIN menu m ON r.restaurant_id = m.restaurant_id
-            WHERE 
-                LOWER(m.item_name) LIKE %s
-                OR LOWER(r.name) LIKE %s
-        """, (f"%{query.lower()}%", f"%{query.lower()}%"))
+            search_cursor.execute("""
+                SELECT r.name AS restaurant_name, r.location, m.item_name, r.restaurant_id
+                FROM restaurants r
+                JOIN menu m ON r.restaurant_id = m.restaurant_id
+                WHERE m.item_name LIKE %s
+            """, (search_term,))
 
-        results = search_cursor.fetchall()
+            all_results = search_cursor.fetchall()  # ✅ ab sahi jagah
 
-        print("RESULTS:", results)
+            final_results = []
+            seen = set()
+
+            # unique restaurants first
+            for item in all_results:
+                if item['restaurant_id'] not in seen:
+                    final_results.append(item)
+                    seen.add(item['restaurant_id'])
+                if len(final_results) == 3:
+                    break
+
+            # fill remaining
+            if len(final_results) < 3:
+                for item in all_results:
+                    if item not in final_results:
+                        final_results.append(item)
+                    if len(final_results) == 3:
+                        break
+
+            results = final_results
 
     return render_template('index.html', results=results, query=query)
-
 # ================= REGISTER =================
 @app.route('/register', methods=['GET', 'POST'])
 def register():

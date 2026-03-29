@@ -6,8 +6,11 @@
     font-family: 'Poppins', sans-serif;
 }
 
-/* BODY */
-body {
+/* BODY + SCROLL FIX */
+html, body {
+    height: 100%;
+    overflow-x: hidden;   /* ❌ horizontal scroll remove */
+    overflow-y: hidden;   /* ❌ vertical scroll remove */
     background: #EAF7F0;
     color: #1B4332;
 }
@@ -48,30 +51,34 @@ body {
 
 /* HERO */
 .hero {
+    height: 100vh;
     display: flex;
-    align-items: flex-start; /* 🔥 IMPORTANT FIX */
+    align-items: center;
     justify-content: space-between;
-    padding: 80px;
+    padding: 60px 80px;
+    position: relative; /* 🔥 important */
 }
 
-/* IMAGES FIX */
+/* SIDE IMAGES */
 .hero-left,
 .hero-right {
-    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.hero-left img {
-    width: 320px;
-}
-
+.hero-left img,
 .hero-right img {
-    width: 240px;
+    height: 260px;
+    width: auto;
+    object-fit: contain;
 }
 
 /* CENTER */
 .hero-center {
     text-align: center;
     max-width: 600px;
+    position: relative; /* 🔥 important */
 }
 
 /* TEXT */
@@ -117,35 +124,65 @@ body {
 
 /* RESULTS */
 .results {
-    margin-top: 15px; /* 🔥 no gap */
+    position: absolute;
+    top: 100%;              /* 🔥 search ke just niche */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    margin-top: 15px;      /* 🔥 small spacing */
 }
 
-/* CARD */
-.card {
-    width: 450px;
-    background: #f5f5f5;
-    border-radius: 12px;
-    padding: 15px 20px;
-    margin: 10px auto;
+/* CARDS */
+.cards-container {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-left: 5px solid #2ecc71;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    justify-content: center;
+    gap: 25px;
+    margin-top: 10px;
 }
 
-/* LEFT */
-.left h3 {
-    font-size: 16px;
+.card {
+    width: 260px;
+    height: 120px;
+    background: #f1f8f4;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
-.left p {
-    font-size: 13px;
-    color: #666;
+/* TEXT */
+.card h3 {
+    font-size: 18px;
+    color: #1b4332;
+    margin-bottom: 5px;
 }
 
-/* PRICE */
-.price {
-    font-weight: bold;
-    color: #ff6b00;
+.card p {
+    font-size: 14px;
+    color: #40916c;
+}
+
+/* ❌ NO HOVER */
+
+.no-results {
+    background: #f1f8f4;
+    padding: 15px;
+    border-radius: 10px;
+    width: 300px;
+    margin: 15px auto;
+}
+
+.no-results h3 {
+    color: #1b4332;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.no-results p {
+    color: #777;
+    font-size: 14px;
 }

@@ -1,142 +1,118 @@
-/* ================= LOGIN PAGE ================= */
-
-.login-page {
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    /* ✅ match index background */
-    background: #E6F4EA;
-}
-
-/* Container */
-.login-page .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-/* ================= CARD ================= */
-
-.login-page .card {
-    background: rgba(255, 255, 255, 0.75);
-    backdrop-filter: blur(12px);
-
-    padding: 35px 30px;
-    width: 330px;
-    border-radius: 20px;
-
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    text-align: center;
-    color: #1B4332;
-}
-
-/* Heading */
-.login-page h2 {
-    margin-bottom: 15px;
-    font-size: 24px;
-}
-
-/* ================= INPUTS ================= */
-
-.login-page input[type="email"],
-.login-page input[type="password"] {
-    width: 100%;
-    padding: 13px;
-    margin: 10px 0;
-    border-radius: 14px;
-    border: 1px solid #dcdcdc;
-
-    background: #f1f3f5;
-    color: #333;
-    font-size: 14px;
-}
-
-.login-page input::placeholder {
-    color: #888;
-}
-
-/* ================= EXTRA ================= */
-
-.login-page .extra {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 13px;
-    margin: 10px 0;
-}
-
-/* ✅ FINAL FIX: checkbox LEFT + single line */
-.login-page .extra label {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    white-space: nowrap;
-    cursor: pointer;
-}
-
-/* checkbox styling */
-.login-page .extra input[type="checkbox"] {
+/* ================= RESET ================= */
+* {
     margin: 0;
-    transform: scale(1.1);
-    cursor: pointer;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
 }
 
-.login-page .extra a {
-    color: #2D6A4F;
-    text-decoration: none;
-    font-weight: 500;
+/* ================= BACKGROUND (SAME AS REGISTER) ================= */
+body {
+    height: 100vh;
+    background: linear-gradient(135deg, #d8f3dc, #95d5b2); /* ✅ SAME */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.login-page .extra a:hover {
-    text-decoration: underline;
+/* ================= GLASS CARD ================= */
+.container {
+    backdrop-filter: blur(18px);
+    background: rgba(255, 255, 255, 0.25);
+    padding: 40px;
+    border-radius: 20px;
+    width: 350px;
+    text-align: center;
+
+    border: 1px solid rgba(255, 255, 255, 0.4);
+
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.15),
+        0 0 20px rgba(46, 204, 113, 0.2);
 }
 
-/* ================= LOGIN BUTTON ================= */
+/* ================= TITLE ================= */
+.container h2 {
+    color: #1B4332;
+    margin-bottom: 25px;
+    font-weight: 600;
+}
 
-.login-page button {
+/* ================= INPUT ================= */
+.container input {
     width: 100%;
-    padding: 13px;
-    border-radius: 30px;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 10px;
     border: none;
+    outline: none;
 
-    background: #2ECC71;
-    color: white;
-    font-weight: bold;
-    font-size: 15px;
-    cursor: pointer;
+    background: rgba(255, 255, 255, 0.7);
+    color: #333;
 
-    box-shadow: 0 6px 18px rgba(46, 204, 113, 0.3);
     transition: 0.3s;
 }
 
-.login-page button:hover {
-    background: #27AE60;
+/* ================= INPUT PLACEHOLDER ================= */
+.container input::placeholder {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+/* ================= INPUT FOCUS ================= */
+.container input:focus {
+    background: #ffffff;
+    box-shadow: 0 0 10px rgba(46, 204, 113, 0.6);
+}
+
+/* ================= BUTTON (LOGIN DIFFERENT COLOR) ================= */
+.container button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+
+    border: none;
+    border-radius: 25px;
+
+    /* 🔥 DIFFERENT FROM REGISTER */
+    background: linear-gradient(135deg, #2fbf71, #25a45f);
+    
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* ================= BUTTON HOVER ================= */
+.container button:hover {
     transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(46, 204, 113, 0.6);
 }
 
-/* ================= TEXT ================= */
-
-.divider-text {
-    margin: 18px 0 8px;
-    font-size: 14px;
-    font-weight: 600;
-    color: #1B4332;
-}
-
-/* ================= REGISTER LINK ================= */
-
-.switch-link {
-    display: block;
+/* ================= SWITCH TEXT ================= */
+.switch-text {
+    margin-top: 18px;
     text-align: center;
-    margin-top: 5px;
-    color: #2D6A4F;
-    font-weight: 600;
-    text-decoration: none;
-    font-size: 15px;
+    color: #1B4332;
+    font-size: 15.5px;
 }
 
-.switch-link:hover {
+.switch-text a {
+    color: #2D6A4F;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.switch-text a:hover {
+    color: #1B4332;
     text-decoration: underline;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 400px) {
+    .container {
+        width: 90%;
+        padding: 30px;
+    }
 }

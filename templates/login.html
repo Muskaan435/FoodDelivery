@@ -9,31 +9,19 @@
 
 <div class="container">
 
-    <!-- FORM -->
     <form method="POST" class="card">
 
         <h2>Welcome Back</h2>
 
         <input type="email" name="email" placeholder="Enter Email" required>
-
-        <div class="password-box">
-            <input type="password" name="password" placeholder="Enter Password" required>
-        </div>
-
-        <div class="extra">
-            <label>
-                <input type="checkbox"> Remember Me
-            </label>
-            <a href="#">Forgot?</a>
-        </div>
+        <input type="password" name="password" placeholder="Enter Password" required>
 
         <button type="submit">Login</button>
 
-        <!-- SWITCH TEXT (same as register page style) -->
-        <p class="divider-text">New here? Create an account</p>
-
-        <!-- SIMPLE LINK (NO BUTTON INSIDE BUTTON) -->
-        <a href="/register" class="switch-link">Register</a>
+        <!-- ONE LINE TEXT -->
+        <p class="switch-text">
+    New here? <a href="/register">Register</a>
+</p>
 
     </form>
 
