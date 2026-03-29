@@ -8,17 +8,39 @@
 
 <div class="header">
     <a href="/dashboard" class="back-btn">⬅ Back</a>
-    <h2 class="title">Your Orders 🛒</h2>
+    <h2 class="title">Your Orders</h2>
 </div>
 
 <div class="orders-container">
 {% for order in orders %}
     <div class="order-card">
+
         <p><span>Order ID:</span> {{ order[0] }}</p>
-        <p><span>Item:</span> {{ order[1] }}</p>
-        <p><span>Price:</span> ₹{{ order[2] }}</p>
-        <p><span>Qty:</span> {{ order[3] }}</p>
-        <p class="total">Total: ₹{{ order[2] * order[3] }}</p>
+
+        {% set items = order[1].split(',') %}
+        {% set qtys = order[2].split(',') %}
+
+        <p><span>Items:</span></p>
+
+        <!-- SINGLE ITEM -->
+        {% if items|length == 1 %}
+            <p class="single-item">
+                {{ items[0] }} (x{{ qtys[0] }})
+            </p>
+
+        <!-- MULTIPLE ITEMS -->
+        {% else %}
+            <div class="items-list">
+                {% for i in range(items|length) %}
+                    <div class="item-row">
+                        {{ items[i] }} (x{{ qtys[i] }})
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <p class="total">Total: ₹{{ order[3] }}</p>
+
     </div>
 {% endfor %}
 </div>

@@ -279,11 +279,17 @@ def orders():
     user_id = session['user_id']
 
     cursor.execute("""
-        SELECT o.order_id, m.item_name, m.price, oi.quantity
+        SELECT 
+            o.order_id AS order_id,
+            GROUP_CONCAT(m.item_name) AS items,
+            GROUP_CONCAT(oi.quantity) AS qtys,
+            SUM(m.price * oi.quantity) AS total
         FROM orders o
         JOIN order_items oi ON o.order_id = oi.order_id
         JOIN menu m ON oi.item_id = m.item_id
         WHERE o.user_id = %s
+        GROUP BY o.order_id
+        ORDER BY o.order_id DESC
     """, (user_id,))
 
     data = cursor.fetchall()
