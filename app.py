@@ -190,53 +190,85 @@ def restaurants():
 # ================= MENU =================
 @app.route('/menu/<int:restaurant_id>')
 def menu(restaurant_id):
-    cursor.execute("SELECT * FROM menu WHERE restaurant_id=%s", (restaurant_id,))
+    cursor.execute(
+        "SELECT * FROM menu WHERE restaurant_id=%s",
+        (restaurant_id,)
+    )
     items = cursor.fetchall()
     return render_template('menu.html', items=items)
 
+
 # ================= SINGLE ORDER =================
-@app.route('/order/<int:item_id>')
+@app.route('/order/<int:item_id>', methods=['POST'])
 def order(item_id):
-    if 'user_id' not in session:
-        return redirect('/login')
+    try:
+        # LOGIN CHECK
+        if 'user_id' not in session:
+            return {"message": "Not logged in"}, 401
 
-    user_id = session['user_id']
+        user_id = session['user_id']
 
-    cursor.execute("INSERT INTO orders (user_id) VALUES (%s)", (user_id,))
-    db.commit()
-    order_id = cursor.lastrowid
+        # CREATE ORDER
+        cursor.execute(
+            "INSERT INTO orders (user_id) VALUES (%s)",
+            (user_id,)
+        )
+        db.commit()
+        order_id = cursor.lastrowid
 
-    cursor.execute(
-        "INSERT INTO order_items (order_id, item_id, quantity) VALUES (%s, %s, %s)",
-        (order_id, item_id, 1)
-    )
-    db.commit()
+        # ADD ITEM
+        cursor.execute(
+            "INSERT INTO order_items (order_id, item_id, quantity) VALUES (%s, %s, %s)",
+            (order_id, item_id, 1)
+        )
+        db.commit()
 
-    return "Order placed successfully 🎉"
+        return {"message": "Order placed successfully"}
+
+    except Exception as e:
+        print("Order Error:", e)
+        return {"message": "Something went wrong"}, 500
+
 
 # ================= CART ORDER =================
 @app.route('/place_order', methods=['POST'])
 def place_order():
-    if 'user_id' not in session:
-        return "Not logged in", 401
+    try:
+        # LOGIN CHECK
+        if 'user_id' not in session:
+            return {"message": "Not logged in"}, 401
 
-    data = request.get_json()
-    cart = data.get('cart')
+        data = request.get_json()
+        cart = data.get('cart')
 
-    user_id = session['user_id']
+        # EMPTY CART CHECK
+        if not cart:
+            return {"message": "Cart is empty"}, 400
 
-    cursor.execute("INSERT INTO orders (user_id) VALUES (%s)", (user_id,))
-    db.commit()
-    order_id = cursor.lastrowid
+        user_id = session['user_id']
 
-    for item in cart:
+        # CREATE ORDER
         cursor.execute(
-            "INSERT INTO order_items (order_id, item_id, quantity) VALUES (%s, %s, %s)",
-            (order_id, item['id'], 1)
+            "INSERT INTO orders (user_id) VALUES (%s)",
+            (user_id,)
         )
+        db.commit()
+        order_id = cursor.lastrowid
 
-    db.commit()
-    return {"message": "Order placed successfully"}
+        # INSERT ALL ITEMS
+        for item in cart:
+            cursor.execute(
+                "INSERT INTO order_items (order_id, item_id, quantity) VALUES (%s, %s, %s)",
+                (order_id, item['id'], 1)
+            )
+
+        db.commit()
+
+        return {"message": "Order placed successfully"}
+
+    except Exception as e:
+        print("Cart Order Error:", e)
+        return {"message": "Something went wrong"}, 500
 
 # ================= VIEW ORDERS =================
 @app.route('/orders')
