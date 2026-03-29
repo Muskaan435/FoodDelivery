@@ -223,25 +223,36 @@ def analytics():
     if 'user_id' not in session:
         return redirect('/login')
 
+    user_id = session['user_id']
+
+    # 👤 Total users (optional - agar dikhana hai)
     cursor.execute("SELECT COUNT(*) FROM users")
     total_users = cursor.fetchone()[0]
 
-    cursor.execute("SELECT COUNT(*) FROM orders")
+    # 📦 Total orders (sirf logged-in user ke)
+    cursor.execute(
+        "SELECT COUNT(*) FROM orders WHERE user_id = %s",
+        (user_id,)
+    )
     total_orders = cursor.fetchone()[0]
 
+    # 🔥 Top 3 favourite items (user ke)
     cursor.execute("""
         SELECT m.item_name, COUNT(*) as count
         FROM order_items oi
+        JOIN orders o ON oi.order_id = o.order_id
         JOIN menu m ON oi.item_id = m.item_id
+        WHERE o.user_id = %s
         GROUP BY oi.item_id
         ORDER BY count DESC
         LIMIT 3
-    """)
+    """, (user_id,))
+    
     popular_items = cursor.fetchall()
 
     return render_template(
         'analytics.html',
-        users=total_users,
+        users=total_users,      # optional (remove if not needed)
         orders=total_orders,
         popular_items=popular_items
     )
