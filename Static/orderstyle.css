@@ -1,77 +1,114 @@
+/* BODY */
 body {
+    margin: 0;
     font-family: Arial;
-    background: #f4f6f9;
+    background: #FDE4CE;
 }
 
-.title {
-    text-align: center;
-    margin: 20px;
-    font-size: 28px;
-}
-
-.orders-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-}
-
-.order-card {
-    background: white;
-    padding: 20px;
-    width: 260px;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    transition: 0.3s;
-}
-
-.order-card:hover {
-    transform: translateY(-5px);
-}
-
-.order-card p {
-    margin: 8px 0;
-}
-
-.order-card span {
-    font-weight: bold;
-}
-
-.total {
-    margin-top: 10px;
-    font-weight: bold;
-    color: green;
-}
+/* HEADER */
 .header {
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
+    color: white;
+    padding: 15px;
 }
 
+.title {
+    font-size: 26px;
+    color: #4E070C;
+}
+
+/* BACK BUTTON */
 .back-btn {
     position: absolute;
     left: 20px;
     text-decoration: none;
-    background: #333;
+    background: #D22701;
     color: white;
     padding: 6px 12px;
     border-radius: 6px;
     font-size: 14px;
+    transition: 0.3s;
 }
 
 .back-btn:hover {
-    background: #111;
+    background: #FF670E;
 }
+
+/* CONTAINER */
+.orders-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+    padding: 20px;
+}
+
+/* CARD */
+.order-card {
+    background: white;
+    color: #4E070C;
+    padding: 20px;
+    width: 260px;
+    border-radius: 14px;
+    border: 1px solid #f3d3bd;
+
+    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* 🔥 HOVER (FINAL) */
+.order-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    background: #4e070cd3;
+    color: white;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.18);
+}
+
+.order-card:hover span,
+.order-card:hover p,
+.order-card:hover .item-row,
+.order-card:hover .single-item {
+    color: white;
+}
+
+/* TEXT */
+.order-card p {
+    margin: 8px 0;
+    color: #444;
+}
+
+.order-card span {
+    font-weight: bold;
+    color: #4E070C;
+}
+
+/* ITEMS */
 .items-list {
     margin-top: 8px;
 }
 
 .item-row {
-    padding: 4px 0;
+    padding: 5px 0;
     border-bottom: 1px solid #eee;
+    font-size: 14px;
 }
 
 .single-item {
     margin-top: 6px;
+    font-size: 14px;
+}
+
+/* TOTAL */
+.total {
+    margin-top: auto;   /* 🔥 always bottom */
+    font-weight: bold;
+    color: #D22701;
+    font-size: 16px;
 }
