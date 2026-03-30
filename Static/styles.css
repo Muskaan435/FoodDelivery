@@ -10,14 +10,14 @@
 html, body {
     height: 100%;
     overflow-x: hidden;   /* ❌ horizontal scroll remove */
-    overflow-y: hidden;   /* ❌ vertical scroll remove */
+    overflow-y: auto;   /* ❌ vertical scroll remove */
     background: #EAF7F0;
     color: #1B4332;
 }
 
 /* NAVBAR */
 .navbar {
-    position: absolute;
+    position: fixed;
     top: 20px;
     left: 40px;
     right: 40px;
@@ -51,12 +51,13 @@ html, body {
 
 /* HERO */
 .hero {
-    height: 100vh;
+    min-height: calc(100vh - 80px); /* ✅ perfect fit */
     display: flex;
+    margin-top: 80px;
     align-items: center;
     justify-content: space-between;
     padding: 60px 80px;
-    position: relative; /* 🔥 important */
+    position: relative;
 }
 
 /* SIDE IMAGES */
