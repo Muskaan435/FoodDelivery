@@ -63,3 +63,15 @@ body {
 .back-btn:hover {
     background: #111;
 }
+.items-list {
+    margin-top: 8px;
+}
+
+.item-row {
+    padding: 4px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.single-item {
+    margin-top: 6px;
+}

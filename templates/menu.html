@@ -8,7 +8,6 @@
 <body>
 
 <div class="header">
-    
     <div>
         <a href="/dashboard" class="back-btn">⬅ Back</a>
     </div>
@@ -18,7 +17,6 @@
     <div class="cart-icon" onclick="openCart()">
         🛒 <span id="cart-count">0</span>
     </div>
-
 </div>
 
 <div class="card-container">
@@ -27,9 +25,13 @@
         <h3>{{ item[2] }}</h3>
         <p>Price: ₹{{ item[3] }}</p>
 
-        <!-- FIXED BUTTONS -->
-    <a href="#" onclick="addToCart({{ item[0] }}, `{{ item[2] }}`, {{ item[3] }})" class="btn">Add to Cart</a>
-        <a href="#" onclick="quickOrder('{{ item[2] }}')" class="btn order">Order Now</a>
+        <button onclick="addToCart({{ item[0] }}, `{{ item[2] }}`, {{ item[3] }})" class="btn">
+            Add to Cart
+        </button>
+
+        <button onclick="quickOrder(this, {{ item[0] }}, `{{ item[2] }}`)" class="btn order">
+            Order Now
+        </button>
     </div>
     {% endfor %}
 </div>
@@ -74,7 +76,7 @@ function openCart() {
     document.getElementById("cart-modal").style.display = "block";
 }
 
-/* PLACE ORDER */
+/* PLACE ORDER (CART) */
 function placeOrder() {
 
     fetch('/place_order', {
@@ -84,13 +86,21 @@ function placeOrder() {
         },
         body: JSON.stringify({ cart: cart })
     })
-    .then(res => res.json())
+    .then(res => {
+        if (res.status === 401) {
+            window.location.href = "/login";
+            return;
+        }
+        return res.json();
+    })
     .then(data => {
-        showPopup("Order Placed ✅");
+        if (data) {
+            showPopup("Order Placed ✅");
 
-        cart = [];
-        document.getElementById("cart-count").innerText = 0;
-        document.getElementById("cart-modal").style.display = "none";
+            cart = [];
+            document.getElementById("cart-count").innerText = 0;
+            document.getElementById("cart-modal").style.display = "none";
+        }
     })
     .catch(err => {
         console.error(err);
@@ -98,9 +108,43 @@ function placeOrder() {
     });
 }
 
-/* QUICK ORDER */
-function quickOrder(item) {
-    showPopup(item + " ordered 🍽️");
+/* QUICK ORDER (DIRECT ORDER) */
+function quickOrder(btn, id, name) {
+
+    // button disable + loading
+    btn.disabled = true;
+    btn.innerText = "Placing...";
+
+    fetch(`/order/${id}`, {
+        method: 'POST'
+    })
+    .then(res => {
+        if (res.status === 401) {
+            window.location.href = "/login";
+            return;
+        }
+        return res.json();
+    })
+    .then(data => {
+        if (data) {
+            showPopup(name + " ordered 🍽️");
+
+            // reset button
+            btn.disabled = false;
+            btn.innerText = "Order Now";
+
+            // optional: clear cart
+            cart = [];
+            document.getElementById("cart-count").innerText = 0;
+        }
+    })
+    .catch(err => {
+        console.error(err);
+        showPopup("Error ❌");
+
+        btn.disabled = false;
+        btn.innerText = "Order Now";
+    });
 }
 
 /* POPUP */

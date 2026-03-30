@@ -29,7 +29,7 @@ h2 {
 /* GRID */
 .card-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* responsive */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 25px;
     max-width: 1000px;
     margin: auto;
@@ -62,32 +62,39 @@ h2 {
 }
 
 /* BUTTON BASE */
-.card a {
-    display: inline-block;
-    padding: 8px 12px;
+.card button {
+    padding: 10px 14px;
     margin: 5px;
+    border: none;
     color: white;
-    text-decoration: none;
     border-radius: 6px;
     font-size: 14px;
+    cursor: pointer;
     transition: 0.3s;
 }
 
-/* BUTTON TYPES */
-.card a.btn {
+/* ADD TO CART */
+.card .btn {
     background-color: #ff6f61;
 }
 
-.card a.btn:hover {
+.card .btn:hover {
     background-color: #ff3b2f;
 }
 
-.card a.order {
+/* ORDER NOW */
+.card .order {
     background-color: #4CAF50;
 }
 
-.card a.order:hover {
+.card .order:hover {
     background-color: #45a049;
+}
+
+/* DISABLED BUTTON */
+.card button:disabled {
+    background-color: gray;
+    cursor: not-allowed;
 }
 
 /* CART ICON */
@@ -140,6 +147,8 @@ h2 {
     border-radius: 6px;
     display: none;
 }
+
+/* BACK BUTTON */
 .back-btn {
     text-decoration: none;
     background: #333;
@@ -147,7 +156,6 @@ h2 {
     padding: 6px 12px;
     border-radius: 6px;
     font-size: 14px;
-    margin-right: 10px;
 }
 
 .back-btn:hover {
