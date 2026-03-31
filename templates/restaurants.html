@@ -17,27 +17,17 @@
 <div class="container">
     {% for r in restaurants %}
     <a href="/menu/{{ r[0] }}" class="card-link">
-    <div class="card">
+        <div class="card">
 
-        {% set name = r[1].lower() %}
+            <!-- 🔥 Dynamic Image -->
+            <img src="{{ url_for('static', filename='uploads/restaurants/' ~ r[0] ~ '.jpg') }}"
+                alt="{{ r[1] }}">
 
-        {% if 'pizza' in name %}
-            <img src="https://source.unsplash.com/400x300/?pizza" alt="">
-        {% elif 'biryani' in name %}
-            <img src="https://source.unsplash.com/400x300/?biryani" alt="">
-        {% elif 'burger' in name %}
-            <img src="https://source.unsplash.com/400x300/?burger" alt="">
-        {% elif 'cafe' in name %}
-            <img src="https://source.unsplash.com/400x300/?cafe" alt="">
-        {% else %}
-            <img src="https://source.unsplash.com/400x300/?restaurant,food" alt="">
-        {% endif %}
+            <h3>{{ r[1] }}</h3>
+            <p>{{ r[2] }}</p>
 
-        <h3>{{ r[1] }}</h3>
-        <p>{{ r[2] }}</p>
-
-    </div>
-</a>
+        </div>
+    </a>
     {% endfor %}
 </div>
 
