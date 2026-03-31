@@ -6,11 +6,10 @@
     font-family: 'Poppins', sans-serif;
 }
 
-/* BODY + SCROLL FIX */
+/* BODY */
 html, body {
     height: 100%;
-    overflow-x: hidden;   /* ❌ horizontal scroll remove */
-    overflow-y: auto;   /* ❌ vertical scroll remove */
+    overflow-x: hidden;
     background: #EAF7F0;
     color: #1B4332;
 }
@@ -22,8 +21,8 @@ html, body {
     left: 40px;
     right: 40px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    z-index: 100;
 }
 
 .logo {
@@ -32,6 +31,7 @@ html, body {
 }
 
 .nav-buttons {
+    margin-left: auto;
     display: flex;
     gap: 15px;
 }
@@ -42,6 +42,7 @@ html, body {
     border-radius: 20px;
     text-decoration: none;
     color: #2ecc71;
+    transition: 0.3s;
 }
 
 .btn-outline:hover {
@@ -51,21 +52,19 @@ html, body {
 
 /* HERO */
 .hero {
-    min-height: calc(100vh - 80px); /* ✅ perfect fit */
+    min-height: calc(100vh - 80px);
     display: flex;
-    margin-top: 80px;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;   /* center layout */
+    gap: 80px;                 /* equal spacing */
     padding: 60px 80px;
-    position: relative;
+    margin-top: 80px;
 }
 
-/* SIDE IMAGES */
+/* LEFT + RIGHT */
 .hero-left,
 .hero-right {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    flex: 0 0 auto;   /* ❗ prevent disappearing */
 }
 
 .hero-left img,
@@ -78,45 +77,56 @@ html, body {
 /* CENTER */
 .hero-center {
     text-align: center;
-    max-width: 600px;
-    position: relative; /* 🔥 important */
+    max-width: 500px;
+    position: relative;
 }
 
 /* TEXT */
 .hero-center h1 {
-    font-size: 40px;
-    margin-bottom: 15px;
+    font-size: 42px;
+    line-height: 1.2;
+    max-width: 480px;   /* 👈 force wrap */
+    margin: 0 auto 15px;
 }
 
 .hero-center p {
     color: #555;
     margin-bottom: 25px;
 }
+.hero-center h1 span {
+    white-space: nowrap;   /* 👈 MAGIC LINE */
+}
 
-/* SEARCH */
+/* SEARCH BOX */
 .search-box {
     display: flex;
+    width: 100%;
+    max-width: 450px;
+    margin: 0 auto;
     background: white;
     border-radius: 50px;
     overflow: hidden;
-    max-width: 450px;
-    margin: auto;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
 }
 
+/* INPUT */
 .search-box input {
     flex: 1;
     border: none;
-    padding: 15px;
+    padding: 15px 20px;
     outline: none;
+    font-size: 14px;
 }
 
+/* BUTTON */
 .search-box button {
     background: #2ecc71;
     border: none;
-    padding: 15px 25px;
+    padding: 0 25px;
     color: white;
     cursor: pointer;
+    border-radius: 0 50px 50px 0;  /* 👈 fixed */
+    transition: 0.3s;
 }
 
 .search-box button:hover {
@@ -126,11 +136,12 @@ html, body {
 /* RESULTS */
 .results {
     position: absolute;
-    top: 100%;              /* 🔥 search ke just niche */
+    top: 100%;
     left: 50%;
     transform: translateX(-50%);
     width: 100%;
-    margin-top: 15px;      /* 🔥 small spacing */
+    margin-top: 20px;
+    text-align: center;
 }
 
 /* CARDS */
@@ -155,7 +166,7 @@ html, body {
     justify-content: center;
 }
 
-/* TEXT */
+/* CARD TEXT */
 .card h3 {
     font-size: 18px;
     color: #1b4332;
@@ -167,14 +178,14 @@ html, body {
     color: #40916c;
 }
 
-/* ❌ NO HOVER */
-
+/* NO RESULTS */
 .no-results {
     background: #f1f8f4;
     padding: 15px;
     border-radius: 10px;
     width: 300px;
     margin: 15px auto;
+    text-align: center;
 }
 
 .no-results h3 {
@@ -186,4 +197,22 @@ html, body {
 .no-results p {
     color: #777;
     font-size: 14px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+    .hero {
+        flex-direction: column;
+        gap: 30px;
+        text-align: center;
+    }
+
+    .hero-left img,
+    .hero-right img {
+        height: 200px;
+    }
+
+    .hero-center h1 {
+        font-size: 32px;
+    }
 }

@@ -8,8 +8,6 @@
 
 <!-- NAVBAR -->
 <div class="navbar">
-    <div class="logo">Food Delivery 🍔</div>
-
     <div class="nav-buttons">
         <a href="/login" class="btn-outline">Login</a>
         <a href="/register" class="btn-outline">Register</a>
@@ -21,52 +19,61 @@
 
     <!-- LEFT IMAGE -->
     <div class="hero-left">
-        <img src="{{ url_for('static', filename='images/biryani.png') }}">
+        <img src="{{ url_for('static', filename='images/biryani.png') }}" alt="Biryani">
     </div>
 
     <!-- CENTER -->
     <div class="hero-center">
-        <h1>Order food from your favorite Restaurants 🍕</h1>
+
+        <h1>
+    <span>Order Food From Your</span><br>
+    <span>Favorite Restaurants 🍕</span>
+</h1>
+
         <p>Fast delivery at your doorstep</p>
 
         <!-- SEARCH -->
         <form action="/" method="POST" class="search-box">
-            <input type="text" name="search" value="{{ query }}" placeholder="Search dishes..." required>
+            <input 
+                type="text" 
+                name="search" 
+                value="{{ query }}" 
+                placeholder="Search dishes..." 
+                required
+            >
             <button type="submit">Search</button>
         </form>
 
         {% if query %}
+        <div class="results">
 
-<div class="results">
+            {% if results %}
+                <h2>Results for "{{ query }}"</h2>
 
-    {% if results %}
-        <h2>Results for "{{ query }}"</h2>
+                <div class="cards-container">
+                    {% for item in results %}
+                    <div class="card">
+                        <h3>{{ item.item_name }}</h3>
+                        <p>{{ item.restaurant_name }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
 
-        <div class="cards-container">
-            {% for item in results %}
-            <div class="card">
-                <h3>{{ item.item_name }}</h3>
-                <p>{{ item.restaurant_name }}</p>
-            </div>
-            {% endfor %}
+            {% else %}
+                <div class="no-results">
+                    <h3>No results found 😕</h3>
+                    <p>Try searching something else</p>
+                </div>
+            {% endif %}
+
         </div>
+        {% endif %}
 
-    {% else %}
-        <!-- ❌ NO RESULTS -->
-        <div class="no-results">
-            <h3>No results found 😕</h3>
-            <p>Try searching something else</p>
-        </div>
-    {% endif %}
-
-</div>
-
-{% endif %}
     </div>
 
     <!-- RIGHT IMAGE -->
     <div class="hero-right">
-        <img src="{{ url_for('static', filename='images/pizza.png') }}">
+        <img src="{{ url_for('static', filename='images/pizza.png') }}" alt="Pizza">
     </div>
 
 </div>
