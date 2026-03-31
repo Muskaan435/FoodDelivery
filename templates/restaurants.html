@@ -1,104 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Restaurants</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Restaurants</title>
 
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: #f5f5f5;
-            margin: 0;
-            padding: 20px;
-        }
-
-        h2 {
-            text-align: center;
-            margin-bottom: 30px;
-            color: #333;
-        }
-
-        /* GRID: 3 per row */
-        .container {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 25px;
-            padding: 0 40px;
-        }
-
-        /* CARD */
-        .card {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            transition: 0.3s;
-        }
-
-        .card:hover {
-            transform: scale(1.04);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-        }
-
-        /* IMAGE */
-        .card img {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-        }
-
-        /* TEXT */
-        .card h3 {
-            margin: 15px;
-            color: #ff4d4d;
-        }
-
-        .card p {
-            margin: 0 15px 15px;
-            color: #555;
-            font-size: 14px;
-        }
-
-        /* BUTTON */
-        .card a {
-            display: block;
-            margin: 10px 15px 20px;
-            text-align: center;
-            text-decoration: none;
-            background: #ff4d4d;
-            color: white;
-            padding: 10px;
-            border-radius: 10px;
-            transition: 0.3s;
-        }
-
-        .card a:hover {
-            background: #e60023;
-        }
-
-        /* Responsive (mobile ke liye) */
-        @media (max-width: 900px) {
-            .container {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 600px) {
-            .container {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../static/restrauntstyle.css">
 </head>
 
 <body>
+    <a href="javascript:history.back()" class="back-btn">← Back</a>
 
-<h2>Restaurants 🍽️</h2>
+<h2>Restaurants</h2>
 
 <div class="container">
     {% for r in restaurants %}
+    <a href="/menu/{{ r[0] }}" class="card-link">
     <div class="card">
 
         {% set name = r[1].lower() %}
@@ -117,8 +35,9 @@
 
         <h3>{{ r[1] }}</h3>
         <p>{{ r[2] }}</p>
-        <a href="/menu/{{ r[0] }}">View Menu</a>
+
     </div>
+</a>
     {% endfor %}
 </div>
 
