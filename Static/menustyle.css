@@ -8,9 +8,10 @@
 /* BODY */
 body {
     font-family: 'Poppins', sans-serif;
-    background: #fdf6f0;   /* cream */
-    padding: 20px;
+    background: #fdf6f0;
+    padding: 0;
     color: #3e2723;
+    overflow-x: hidden;
 }
 
 /* HEADER */
@@ -18,12 +19,13 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 15px 20px;
 }
 
 /* HEADING */
 h2 {
     text-align: center;
-    margin-bottom: 30px;
+    margin: 20px 0;
     color: #5d4037;
 }
 
@@ -34,12 +36,13 @@ h2 {
     gap: 25px;
     max-width: 1000px;
     margin: auto;
+    padding: 20px;
 }
 
 /* CARD */
 .card {
     background: #fffaf5;
-    padding: 20px;
+    padding: 15px;
     border-radius: 14px;
     border: 1px solid #e6d3c3;
     box-shadow: 0 6px 15px rgba(93, 64, 55, 0.12);
@@ -51,23 +54,55 @@ h2 {
     box-shadow: 0 10px 25px rgba(93, 64, 55, 0.2);
 }
 
-/* TEXT */
-.card h3 {
-    font-size: 18px;
-    margin-bottom: 8px;
-    color: #5d4037;
+/* 🔥 TOP SECTION (image + info side by side) */
+.card-top {
+    display: flex;
+    gap: 15px;
+    align-items: center;
 }
 
-.card p {
-    font-size: 15px;
+/* IMAGE */
+.card-top img {
+    width: 140px;
+    height: 110px;
+    object-fit: cover;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+.card:hover .card-top img {
+    transform: scale(1.05);
+}
+
+/* TEXT */
+.info {
+    flex: 1;
+}
+
+.info h3 {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.info p {
+    font-size: 14px;
     color: #8d6e63;
-    margin-bottom: 15px;
+}
+
+/* BUTTON SECTION */
+.card-bottom {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+}
+
+.card-bottom button {
+    flex: 1;
 }
 
 /* BUTTON BASE */
 .card button {
     padding: 10px 14px;
-    margin: 5px;
     border: none;
     color: white;
     border-radius: 8px;
@@ -94,7 +129,7 @@ h2 {
     background: #ef6c00;
 }
 
-/* DISABLED BUTTON */
+/* DISABLED */
 .card button:disabled {
     background: #b0a59f;
     cursor: not-allowed;
@@ -166,5 +201,5 @@ h2 {
 
 .back-btn:hover {
     background: #4e342e;
-    transform: translateX(-6px); /* fixed typo */
+    transform: translateX(-6px);
 }
