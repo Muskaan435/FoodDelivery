@@ -9,7 +9,7 @@
 <!-- HEADER -->
 <div class="header">
     <div class="menu-btn" onclick="toggleMenu()">☰</div>
-    <h2 class="title">Welcome Back</h2> <!-- Replaced 'Dashboard' with something more personal -->
+    <h2 class="title">Welcome Back</h2>
 </div>
 
 <!-- SIDEBAR -->
@@ -47,40 +47,34 @@
     {% else %}
     <h3>Top Picks For You 🎯</h3>
     {% endif %}
-    <!-- RECOMMENDED RESTAURANTS -->
+
+    <!-- 🔥 RECOMMENDED RESTAURANTS -->
     <div class="grid">
     {% for r in recommended %}
     <a href="/menu/{{ r[0] }}" class="card-link">
         <div class="card">
-            {% set name_lower = r[1].lower() %}
-            {% if 'pizza' in name_lower %}
-                <img src="https://loremflickr.com/400/300/pizza">
-            {% elif 'biryani' in name_lower %}
-                <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=400">
-            {% elif 'burger' in name_lower %}
-                <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?w=400">
-            {% elif 'cafe' in name_lower %}
-                <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=400">
-            {% else %}
-                <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400">
-            {% endif %}
+
+            <!-- ✅ Dynamic Image -->
+            <img src="{{ url_for('static', filename='uploads/restaurants/' ~ r[0] ~ '.jpg') }}"
+                 onerror="this.src='https://picsum.photos/400/300'"
+                 alt="{{ r[1] }}">
 
             <h3>{{ r[1] }}</h3>
             <p>{{ r[2] }}</p>
         </div>
     </a>
     {% endfor %}
-</div>
+    </div>
 
-    <!-- OUR RESTAURANTS -->
+    <!-- 🔥 OUR RESTAURANTS -->
     <h3>Our Restaurants 🍽️</h3>
 
-<div class="scroll-container">
+    <div class="scroll-container">
 
     {% for r in our_restaurants %}
     <a href="/menu/{{ r[0] }}" class="card-link">
         <div class="scroll-card">
-          <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400">  
+            <img src="https://source.unsplash.com/400x300/?restaurant,food">
             <h3>{{ r[1] }}</h3>
             <p>{{ r[2] }}</p>
         </div>
@@ -91,16 +85,16 @@
     <a href="/restaurants" class="card-link">
         <div class="scroll-card view-more">
     <div class="image-grid">
-        <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=100">
-<img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=100">
-<img src="https://images.unsplash.com/photo-1550547660-d9450f859349?w=100">
-<img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=100">
+        <img src="https://source.unsplash.com/100x100/?pizza">
+        <img src="https://source.unsplash.com/100x100/?biryani">
+        <img src="https://source.unsplash.com/100x100/?burger">
+        <img src="https://source.unsplash.com/100x100/?cafe">
     </div>
     <h3>View More →</h3>
 </div>
     </a>
 
-</div>
+    </div>
 
 </div>
 
