@@ -53,25 +53,17 @@
     <a href="/menu/{{ r[0] }}" class="card-link">
         <div class="card">
             {% set name_lower = r[1].lower() %}
-
-{% if 'dominos' in name_lower %}
-    <img src="https://images.unsplash.com/photo-1769968079563-65519a9147da?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
-
-{% elif 'cafe coffee day' in name_lower %}
-    <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=400">
-
-{% elif 'haldiram' in name_lower %}
-    <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?w=400">
-
-{% elif 'barbeque' in name_lower %}
-    <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=400">
-
-{% elif 'pizza' in name_lower %}
-    <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400">
-
-{% else %}
-    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400">
-{% endif %}
+            {% if 'pizza' in name_lower %}
+                <img src="https://loremflickr.com/400/300/pizza">
+            {% elif 'biryani' in name_lower %}
+                <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=400">
+            {% elif 'burger' in name_lower %}
+                <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?w=400">
+            {% elif 'cafe' in name_lower %}
+                <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=400">
+            {% else %}
+                <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400">
+            {% endif %}
 
             <h3>{{ r[1] }}</h3>
             <p>{{ r[2] }}</p>
