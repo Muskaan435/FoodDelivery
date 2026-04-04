@@ -203,3 +203,35 @@ h2 {
     background: #4e342e;
     transform: translateX(-6px);
 }
+
+/* FLOATING CART FOOTER */
+.cart-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #5d4037;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;   /* 🔥 left-right gap badhaya */
+    font-size: 16px;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
+    z-index: 1000;
+}
+
+.cart-footer button {
+    background: #ff9800;
+    color: white;
+    border: none;
+    padding: 10px 18px;   /* 🔥 thoda bada */
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-left: 15px;    /* 🔥 text se gap */
+}
+
+.hidden {
+    display: none;
+}

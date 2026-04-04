@@ -71,28 +71,33 @@
 
     <div class="scroll-container">
 
-    {% for r in our_restaurants %}
-    <a href="/menu/{{ r[0] }}" class="card-link">
-        <div class="scroll-card">
-            <img src="https://source.unsplash.com/400x300/?restaurant,food">
-            <h3>{{ r[1] }}</h3>
-            <p>{{ r[2] }}</p>
-        </div>
-    </a>
-    {% endfor %}
+        {% for r in our_restaurants %}
+        <a href="/menu/{{ r[0] }}" class="card-link">
+            <div class="scroll-card">
 
-    <!-- VIEW MORE -->
-    <a href="/restaurants" class="card-link">
-        <div class="scroll-card view-more">
-    <div class="image-grid">
-        <img src="https://source.unsplash.com/100x100/?pizza">
-        <img src="https://source.unsplash.com/100x100/?biryani">
-        <img src="https://source.unsplash.com/100x100/?burger">
-        <img src="https://source.unsplash.com/100x100/?cafe">
-    </div>
-    <h3>View More →</h3>
-</div>
-    </a>
+                <!-- ✅ Dynamic Image -->
+                <img src="{{ url_for('static', filename='uploads/restaurants/' ~ r[0] ~ '.jpg') }}"
+                     onerror="this.src='https://picsum.photos/400/300'"
+                     alt="{{ r[1] }}">
+
+                <h3>{{ r[1] }}</h3>
+                <p>{{ r[2] }}</p>
+            </div>
+        </a>
+        {% endfor %}
+
+        <!-- VIEW MORE -->
+        <a href="/restaurants" class="card-link">
+            <div class="scroll-card view-more">
+                <div class="image-grid">
+                    <img src="https://picsum.photos/seed/food1/100">
+                    <img src="https://picsum.photos/seed/food2/100">
+                    <img src="https://picsum.photos/seed/food3/100">
+                    <img src="https://picsum.photos/seed/food4/100">
+                </div>
+                <h3>View More →</h3>
+            </div>
+        </a>
 
     </div>
 
@@ -102,6 +107,7 @@
 function toggleMenu() {
     document.getElementById("sidebar").classList.toggle("active");
 }
+
 </script>
 
 </body>

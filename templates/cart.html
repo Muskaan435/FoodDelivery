@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Your Cart</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='cartstyle.css') }}">
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+    <a href="/menu/1">⬅ Back</a>
+    <h3>Your Cart</h3>
+</div>
+
+<!-- CART ITEMS -->
+<div id="cart-container" class="container"></div>
+
+<!-- BOTTOM BAR -->
+<div class="bottom-bar">
+    <h3 id="total">₹0</h3>
+    <button class="order-btn" onclick="placeOrder()">Place Order</button>
+</div>
+
+<script>
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+/* GROUP ITEMS */
+function groupCart() {
+    const grouped = {};
+
+    cart.forEach(item => {
+        if (!grouped[item.id]) {
+            grouped[item.id] = { ...item, qty: 1 };
+        } else {
+            grouped[item.id].qty++;
+        }
+    });
+
+    return Object.values(grouped);
+}
+
+/* DISPLAY CART */
+function displayCart() {
+    const container = document.getElementById("cart-container");
+    const totalEl = document.getElementById("total");
+
+    container.innerHTML = "";
+
+    const items = groupCart();
+    let total = 0;
+
+    if (items.length === 0) {
+        container.innerHTML = `<div class="empty-cart">Cart is empty</div>`;
+        totalEl.innerText = "₹0";
+        return;
+    }
+
+    let html = "";
+
+    items.forEach(item => {
+        total += item.price * item.qty;
+
+        html += `
+            <div class="cart-item">
+                <img src="https://picsum.photos/80?random=${item.id}">
+                
+                <div class="details">
+                    <h4>${item.name}</h4>
+                    <p>₹${item.price}</p>
+                </div>
+
+                <div class="controls">
+                    <button class="btn" onclick="changeQty(${item.id}, -1)">-</button>
+                    <span class="qty">${item.qty}</span>
+                    <button class="btn" onclick="changeQty(${item.id}, 1)">+</button>
+                </div>
+
+                <button class="remove" onclick="removeItem(${item.id})">❌</button>
+            </div>
+        `;
+    });
+
+    container.innerHTML = html;
+    totalEl.innerText = "₹" + total;
+}
+
+/* CHANGE QTY */
+function changeQty(id, change) {
+    if (change === 1) {
+        const item = cart.find(i => i.id === id);
+        cart.push(item);
+    } else {
+        const index = cart.findIndex(i => i.id === id);
+        if (index > -1) cart.splice(index, 1);
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+    displayCart();
+}
+
+/* REMOVE ITEM */
+function removeItem(id) {
+    cart = cart.filter(item => item.id !== id);
+    localStorage.setItem("cart", JSON.stringify(cart));
+    displayCart();
+}
+
+/* PLACE ORDER */
+function placeOrder() {
+    if (cart.length === 0) return;
+
+    fetch('/place_order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ cart })
+    })
+    .then(res => {
+        if (res.status === 401) {
+            window.location.href = "/login";
+            return;
+        }
+        return res.json();
+    })
+    .then(() => {
+        cart = [];
+        localStorage.removeItem("cart");
+        displayCart();
+
+        document.querySelector(".bottom-bar").innerHTML =
+            `<p class="success-msg">Order Placed Successfully ✅</p>`;
+    });
+}
+
+displayCart();
+</script>
+
+</body>
+</html>

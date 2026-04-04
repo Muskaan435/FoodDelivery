@@ -97,6 +97,9 @@ def login():
         if user:
             session['user_id'] = user[0]
             session['user_name'] = user[1]
+
+            session['clear_cart'] = True
+
             return redirect('/dashboard')
         else:
             return "Invalid credentials ❌"
@@ -234,37 +237,49 @@ def order(item_id):
 @app.route('/place_order', methods=['POST'])
 def place_order():
     try:
-        # LOGIN CHECK
+        # ✅ LOGIN CHECK
         if 'user_id' not in session:
             return {"message": "Not logged in"}, 401
 
         data = request.get_json()
         cart = data.get('cart')
 
-        # EMPTY CART CHECK
-        if not cart:
+        # ✅ EMPTY CART CHECK
+        if not cart or len(cart) == 0:
             return {"message": "Cart is empty"}, 400
 
         user_id = session['user_id']
 
-        # CREATE ORDER
+        # ✅ CREATE ORDER
         cursor.execute(
             "INSERT INTO orders (user_id) VALUES (%s)",
             (user_id,)
         )
         db.commit()
+
         order_id = cursor.lastrowid
 
-        # INSERT ALL ITEMS
+        # ✅ GROUP ITEMS (quantity count)
+        grouped = {}
         for item in cart:
+            if item['id'] not in grouped:
+                grouped[item['id']] = 1
+            else:
+                grouped[item['id']] += 1
+
+        # ✅ INSERT ITEMS WITH QUANTITY
+        for item_id, qty in grouped.items():
             cursor.execute(
                 "INSERT INTO order_items (order_id, item_id, quantity) VALUES (%s, %s, %s)",
-                (order_id, item['id'], 1)
+                (order_id, item_id, qty)
             )
 
         db.commit()
 
-        return {"message": "Order placed successfully"}
+        return {
+            "message": "Order placed successfully",
+            "order_id": order_id
+        }
 
     except Exception as e:
         print("Cart Order Error:", e)
@@ -331,6 +346,9 @@ def analytics():
         orders=total_orders,
         popular_items=popular_items
     )
+@app.route('/cart')
+def cart():
+    return render_template('cart.html')
 
 # ================= RUN =================
 if __name__ == '__main__':
