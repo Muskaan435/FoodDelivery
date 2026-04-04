@@ -22,16 +22,30 @@
 <div class="card-container">
     {% for item in items %}
     <div class="card">
-        <h3>{{ item[2] }}</h3>
-        <p>Price: ₹{{ item[3] }}</p>
 
-        <button onclick="addToCart({{ item[0] }}, `{{ item[2] }}`, {{ item[3] }})" class="btn">
-            Add to Cart
-        </button>
+        <!-- 🔥 TOP SECTION -->
+        <div class="card-top">
+            <img src="{{ url_for('static', filename='uploads/menu/' ~ item[1] ~ '/' ~ item[0] ~ '.jpg') }}"
+                 onerror="this.src='https://picsum.photos/120?random={{ item[0] }}'"
+                 alt="{{ item[2] }}">
 
-        <button onclick="quickOrder(this, {{ item[0] }}, `{{ item[2] }}`)" class="btn order">
-            Order Now
-        </button>
+            <div class="info">
+                <h3>{{ item[2] }}</h3>
+                <p>₹{{ item[3] }}</p>
+            </div>
+        </div>
+
+        <!-- 🔥 BUTTONS -->
+        <div class="card-bottom">
+            <button onclick="addToCart({{ item[0] }}, `{{ item[2] }}`, {{ item[3] }})" class="btn">
+                Add to Cart
+            </button>
+
+            <button onclick="quickOrder(this, {{ item[0] }}, `{{ item[2] }}`)" class="btn order">
+                Order Now
+            </button>
+        </div>
+
     </div>
     {% endfor %}
 </div>
@@ -76,14 +90,11 @@ function openCart() {
     document.getElementById("cart-modal").style.display = "block";
 }
 
-/* PLACE ORDER (CART) */
+/* PLACE ORDER */
 function placeOrder() {
-
     fetch('/place_order', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ cart: cart })
     })
     .then(res => {
@@ -96,28 +107,20 @@ function placeOrder() {
     .then(data => {
         if (data) {
             showPopup("Order Placed ✅");
-
             cart = [];
             document.getElementById("cart-count").innerText = 0;
             document.getElementById("cart-modal").style.display = "none";
         }
     })
-    .catch(err => {
-        console.error(err);
-        showPopup("Error placing order ❌");
-    });
+    .catch(() => showPopup("Error placing order ❌"));
 }
 
-/* QUICK ORDER (DIRECT ORDER) */
+/* QUICK ORDER */
 function quickOrder(btn, id, name) {
-
-    // button disable + loading
     btn.disabled = true;
     btn.innerText = "Placing...";
 
-    fetch(`/order/${id}`, {
-        method: 'POST'
-    })
+    fetch(`/order/${id}`, { method: 'POST' })
     .then(res => {
         if (res.status === 401) {
             window.location.href = "/login";
@@ -128,20 +131,14 @@ function quickOrder(btn, id, name) {
     .then(data => {
         if (data) {
             showPopup(name + " ordered 🍽️");
-
-            // reset button
             btn.disabled = false;
             btn.innerText = "Order Now";
-
-            // optional: clear cart
             cart = [];
             document.getElementById("cart-count").innerText = 0;
         }
     })
-    .catch(err => {
-        console.error(err);
+    .catch(() => {
         showPopup("Error ❌");
-
         btn.disabled = false;
         btn.innerText = "Order Now";
     });
@@ -161,4 +158,3 @@ function showPopup(msg) {
 
 </body>
 </html>
-```
