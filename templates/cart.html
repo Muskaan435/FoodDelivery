@@ -22,6 +22,18 @@
     <button class="order-btn" onclick="placeOrder()">Place Order</button>
 </div>
 
+<!-- ✅ SUCCESS POPUP -->
+<div id="success-popup" class="success-popup">
+    <div class="popup-content">
+        <div class="checkmark">✔</div>
+        <h2>Order Placed!</h2>
+        <p>Your food is on the way 🚀</p>
+    </div>
+</div>
+
+<!-- 🎉 CONFETTI -->
+<canvas id="confetti-canvas"></canvas>
+
 <script>
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
@@ -63,7 +75,7 @@ function displayCart() {
 
         html += `
             <div class="cart-item">
-                <img src="https://picsum.photos/80?random=${item.id}">
+                <img src="${item.image || 'https://picsum.photos/80'}">
                 
                 <div class="details">
                     <h4>${item.name}</h4>
@@ -127,12 +139,66 @@ function placeOrder() {
         localStorage.removeItem("cart");
         displayCart();
 
-        document.querySelector(".bottom-bar").innerHTML =
-            `<p class="success-msg">Order Placed Successfully ✅</p>`;
+        showSuccessPopup();
     });
 }
 
+/* 🎉 POPUP FUNCTION */
+function showSuccessPopup() {
+    const popup = document.getElementById("success-popup");
+    popup.classList.add("show");
+
+    startConfetti();
+
+    setTimeout(() => {
+        popup.classList.remove("show");
+        window.location.href = "/dashboard";
+    }, 1200);
+}
+
+/* 🎉 CONFETTI (SAFE VERSION) */
+let canvas, ctx;
+let confetti = [];
+
+function startConfetti() {
+    canvas = document.getElementById("confetti-canvas");
+    if (!canvas) return;
+
+    ctx = canvas.getContext("2d");
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    confetti = Array.from({ length: 100 }).map(() => ({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height - canvas.height,
+        r: Math.random() * 6 + 2
+    }));
+
+    animateConfetti();
+}
+
+function animateConfetti() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    confetti.forEach(p => {
+        ctx.beginPath();
+
+        // 🎨 RANDOM COLORS
+        ctx.fillStyle = `hsl(${Math.random() * 360}, 100%, 50%)`;
+
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fill();
+
+        p.y += 2;
+        if (p.y > canvas.height) p.y = 0;
+    });
+
+    requestAnimationFrame(animateConfetti);
+}
+/* INITIAL LOAD */
 displayCart();
+
 </script>
 
 </body>

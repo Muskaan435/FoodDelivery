@@ -37,7 +37,12 @@
 
         <!-- 🔥 BUTTONS -->
         <div class="card-bottom">
-            <button onclick="addToCart({{ item[0] }}, `{{ item[2] }}`, {{ item[3] }})" class="btn">
+            <button onclick="addToCart(
+    {{ item[0] }},
+    `{{ item[2] }}`,
+    {{ item[3] }},
+    `{{ url_for('static', filename='uploads/menu/' ~ item[1] ~ '/' ~ item[0] ~ '.jpg') }}`
+)" class="btn">
                 Add to Cart
             </button>
 
@@ -56,11 +61,10 @@
 
 <script>
 
-/* ADD TO CART */
-function addToCart(id, name, price) {
+function addToCart(id, name, price, image) {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-    cart.push({ id, name, price });
+    cart.push({ id, name, price, image }); // ✅ image add kiya
 
     localStorage.setItem("cart", JSON.stringify(cart));
 
@@ -68,13 +72,11 @@ function addToCart(id, name, price) {
 
     showPopup(name + " added 🛒");
 
-    // 🔥 NEW CODE (footer ke liye)
     document.getElementById("cart-text").innerText =
         cart.length + " item(s) added";
 
     document.getElementById("cart-footer").classList.remove("hidden");
 }
-
 /* QUICK ORDER */
 function quickOrder(btn, id, name) {
     btn.disabled = true;
