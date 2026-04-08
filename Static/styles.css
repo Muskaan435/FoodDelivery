@@ -11,8 +11,8 @@ html, body {
     height: 100%;
     overflow-x: hidden;
     overflow-y: auto;
-    background: #fdf6f0;   /* cream */
-    color: #3e2723;        /* dark brown */
+    background: #0F172A;
+    color: #E2E8F0;
 }
 
 /* NAVBAR */
@@ -29,7 +29,7 @@ html, body {
 .logo {
     font-size: 22px;
     font-weight: bold;
-    color: #5d4037;
+    color: #A78BFA;
 }
 
 .nav-buttons {
@@ -40,16 +40,16 @@ html, body {
 
 .btn-outline {
     padding: 8px 18px;
-    border: 2px solid #8d6e63;
+    border: 2px solid #A78BFA;
     border-radius: 20px;
     text-decoration: none;
-    color: #8d6e63;
+    color: #A78BFA;
     transition: 0.3s;
 }
 
 .btn-outline:hover {
-    background: #8d6e63;
-    color: white;
+    background: #A78BFA;
+    color: #0F172A;
 }
 
 /* HERO */
@@ -57,16 +57,15 @@ html, body {
     min-height: calc(100vh - 80px);
     display: flex;
     align-items: center;
-    justify-content: center;   /* center layout */
-    gap: 80px;                 /* equal spacing */
+    justify-content: center;
+    gap: 80px;
     padding: 60px 80px;
     margin-top: 80px;
 }
 
-/* LEFT + RIGHT */
 .hero-left,
 .hero-right {
-    flex: 0 0 auto;   /* ❗ prevent disappearing */
+    flex: 0 0 auto;
 }
 
 .hero-left img,
@@ -75,7 +74,6 @@ html, body {
     object-fit: contain;
 }
 
-/* CENTER */
 .hero-center {
     text-align: center;
     max-width: 600px;
@@ -86,50 +84,52 @@ html, body {
 .hero-center h1 {
     font-size: 40px;
     margin-bottom: 15px;
-    color: #5d4037;
+    color: #F8FAFC;
 }
 
 .hero-center p {
-    color: #7b5e57;
+    color: #94A3B8;
     margin-bottom: 25px;
 }
+
 .hero-center h1 span {
-    white-space: nowrap;   /* 👈 MAGIC LINE */
+    white-space: nowrap;
+    color: #22D3EE;
 }
 
 /* SEARCH BOX */
 .search-box {
     display: flex;
-    background: #fffaf5;
+    background: #1E293B;
     border-radius: 50px;
     overflow: hidden;
     max-width: 450px;
     margin: auto;
-    box-shadow: 0 4px 15px rgba(93, 64, 55, 0.15);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
 }
 
-/* INPUT */
 .search-box input {
     flex: 1;
     border: none;
     padding: 15px 20px;
     outline: none;
     background: transparent;
-    color: #3e2723;
+    color: #E2E8F0;
 }
 
-/* BUTTON */
+/* BUTTON (final clean version) */
 .search-box button {
-    background: linear-gradient(135deg, #8d6e63, #5d4037);
-    border: none;
+    background: #A78BFA;
+    border: 2px solid #A78BFA;
     padding: 0 25px;
-    color: white;
+    color: #0F172A;
     cursor: pointer;
     transition: 0.3s;
 }
 
 .search-box button:hover {
-    background: #5d4037;
+    background: #22D3EE;
+    color: white;
 }
 
 /* RESULTS */
@@ -153,50 +153,69 @@ html, body {
 .card {
     width: 260px;
     height: 120px;
-    background: #fffaf5;
+    background: linear-gradient(135deg, #1E293B, #312E81);
     border-radius: 15px;
     padding: 20px;
     text-align: center;
-    border: 1px solid #e6d3c3;
-    box-shadow: 0 6px 15px rgba(93, 64, 55, 0.12);
+    border: 1px solid rgba(167, 139, 250, 0.3);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.25);
 
     display: flex;
     flex-direction: column;
     justify-content: center;
+    transition: 0.3s;
 }
 
-/* CARD TEXT */
+.card:hover {
+    transform: translateY(-6px) scale(1.02);
+    border-color: #A78BFA;
+    box-shadow: 0 15px 40px rgba(167, 139, 250, 0.3);
+}
+
 .card h3 {
     font-size: 18px;
-    color: #5d4037;
+    color: #F1F5F9;
     margin-bottom: 5px;
 }
 
 .card p {
     font-size: 14px;
-    color: #8d6e63;
+    color: #94A3B8;
 }
 
 /* NO RESULTS */
 .no-results {
-    background: #fffaf5;
-    border: 1px solid #e6d3c3;
-    padding: 15px;
-    border-radius: 10px;
-    width: 300px;
-    margin: 15px auto;
+    background: linear-gradient(135deg, #1E293B, #312E81);
+    border: 1px solid rgba(167, 139, 250, 0.4);
+    padding: 18px;
+    border-radius: 12px;
+    width: 320px;
+    margin: 20px auto;
     text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    animation: fadeIn 0.4s ease-in-out;
 }
 
 .no-results h3 {
-    color: #5d4037;
-    font-size: 18px;
+    color: #F8FAFC;
     margin-bottom: 5px;
 }
 
 .no-results p {
-    color: #7b5e57;
+    color: #CBD5F5;
     font-size: 14px;
+}
+
+/* ANIMATION */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* RESPONSIVE */
