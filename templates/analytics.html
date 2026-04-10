@@ -58,48 +58,60 @@
 
 <script>
 
-    // 📊 CHART
-    const dataDiv = document.getElementById("data");
-    const rawData = JSON.parse(dataDiv.getAttribute("data-items") || "[]");
+// 📊 CHART
+const dataDiv = document.getElementById("data");
+const rawData = JSON.parse(dataDiv.getAttribute("data-items") || "[]");
 
-    const labels = rawData.map(item => item[0]);
-    const values = rawData.map(item => item[1]);
+const labels = rawData.map(item => item[0]);
+const values = rawData.map(item => item[1]);
 
-    const ctx = document.getElementById('myChart').getContext('2d');
+const ctx = document.getElementById('myChart').getContext('2d');
 
-    new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-            labels: labels,
-            datasets: [{
-                data: values,
-                backgroundColor: ['#6d4c41', '#bf360c', '#ffcc80'],
-                borderWidth: 0
-            }]
+new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+        labels: labels,
+        datasets: [{
+            data: values,
+            backgroundColor: ['#b8e3e9', '#f5b8d5', '#b298e7'],
+            borderWidth: 0
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        layout: {
+            padding: {
+                top: 35,
+                bottom: 10
+            }
         },
-        options: {
-            responsive: true,
-            animation: {
-                animateRotate: true,
-                animateScale: true,
-                duration: 1200,
-                easing: 'easeOutCubic'
-            },
-            cutout: '70%',
-            plugins: {
-                legend: {
-                    labels: {
-                        color: "#5d4037",
-                        font: {
-                            size:20
-                        }
-                    }
+        animation: {
+            animateRotate: true,
+            animateScale: true,
+            duration: 1200,
+            easing: 'easeOutCubic'
+        },
+        cutout: '70%',
+        plugins: {
+            legend: {
+                position: 'top',
+                labels: {
+                    color: "#000000",   // 🔥 FIXED (BLACK TEXT)
+                    font: {
+                        size: 18,
+                        weight: '600'
+                    },
+                    boxWidth: 18,
+                    boxHeight: 18,
+                    padding: 28,
+                    usePointStyle: true,
+                    pointStyle: 'rectRounded'
                 }
             }
         }
-    });
-
-
+    }
+});
     // 🔢 COUNTER ANIMATION
     const counters = document.querySelectorAll('.counter');
 
