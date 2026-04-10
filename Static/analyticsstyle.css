@@ -1,11 +1,8 @@
 /* ===== BASE ===== */
 body {
-    margin: 0;
     font-family: 'Poppins', sans-serif;
-    background: radial-gradient(circle at top, #fdf6f0, #f3e5dc); /* cream */
-    color: #3e2723; /* brown text */
-    height: 100vh;
-    overflow: hidden;
+    background: #faf8ff; /* 🔥 more lighter pastel lavender */
+    background-attachment: fixed;
 }
 
 /* ===== HEADER ===== */
@@ -14,10 +11,10 @@ h1 {
     margin-top: 50px;
     margin-bottom: 10px;
     font-size: 30px;
-    color: #6d4c41; /* brown */
+    color: #5b4bb7;
 }
 
-/* ===== LAYOUT (UNCHANGED) ===== */
+/* ===== LAYOUT ===== */
 .dashboard {
     display: flex;
     height: calc(100vh - 70px);
@@ -25,7 +22,7 @@ h1 {
     gap: 30px;
 }
 
-/* ===== LEFT (UNCHANGED) ===== */
+/* ===== LEFT ===== */
 .left {
     flex: 1;
     display: flex;
@@ -34,9 +31,9 @@ h1 {
     justify-content: center;
 }
 
-/* ===== RIGHT (UNCHANGED) ===== */
+/* ===== RIGHT ===== */
 .right {
-    flex: 1.4;
+    flex: 1.5; /* thoda bigger */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -47,21 +44,44 @@ h1 {
     flex: 1;
     padding: 20px;
     border-radius: 14px;
-
-    background: linear-gradient(135deg, #8d6e63, #5d4037); /* brown gradient */
-    color: #fff;
-
+    color: #2f2a44;
     text-align: center;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    border: 1px solid rgba(178, 152, 231, 0.28);
+    box-shadow: 0 8px 20px rgba(91, 75, 183, 0.08);
+    transition: all 0.3s ease;
+}
+
+/* first left card = fixed blue */
+.left .stat-card {
+    background: rgba(184, 227, 233, 0.50);
+    border-color: rgba(184, 227, 233, 0.95);
+}
+
+/* hover = only lift, no color switch */
+.left .stat-card:hover {
+    transform: translateY(-6px);
+    box-shadow:
+        0 12px 26px rgba(184, 227, 233, 0.25),
+        0 0 20px rgba(184, 227, 233, 0.22);
 }
 
 /* ===== CARD ===== */
 .card {
     padding: 18px;
     border-radius: 14px;
+    background: rgba(245, 184, 213, 0.45); /* fixed pink */
+    border: 1px solid rgba(245, 184, 213, 0.90);
+    box-shadow:
+        0 8px 20px rgba(91, 75, 183, 0.08);
+    transition: all 0.3s ease;
+}
 
-    background: #fffaf5; /* soft cream */
-    border: 1px solid #e6d3c3;
+/* hover = only lift, no color switch */
+.left .card:hover {
+    transform: translateY(-6px);
+    box-shadow:
+        0 12px 26px rgba(245, 184, 213, 0.25),
+        0 0 20px rgba(245, 184, 213, 0.22);
 }
 
 /* ===== ITEMS ===== */
@@ -69,24 +89,27 @@ h1 {
     display: flex;
     justify-content: space-between;
     padding: 10px 0;
-    border-bottom: 1px solid #e6d3c3;
+    border-bottom: 1px solid rgba(178, 152, 231, 0.25);
 }
 
 .item-row span {
-    color: #5d4037;
+    color: #4b5563;
 }
 
 .item-row b {
-    color: #bf360c; /* food accent */
+    color: #5b4bb7;
 }
 
 /* ===== CHART ===== */
 canvas {
-    width: 500px !important;
-    height: 500px !important;
-
-    border-radius: 18px;
-    box-shadow: 0 0 25px rgba(109,76,65,0.25); /* brown glow */
+    width: 560px !important;   /* bigger */
+    height: 560px !important;  /* bigger */
+    display: block;
+    padding: 18px;             /* extra space around */
+    border-radius: 20px;
+    background: rgba(255, 252, 253, 0.92);
+    border: 1px solid rgba(178, 152, 231, 0.22);
+    box-shadow: 0 0 25px rgba(178, 152, 231, 0.18);
 }
 
 /* ===== BACK BUTTON ===== */
@@ -96,19 +119,21 @@ canvas {
     left: 20px;
 
     text-decoration: none;
-    color: white;
     font-size: 14px;
 
     padding: 8px 14px;
-    border-radius: 8px;
+    border-radius: 20px;
 
-    background: #6d4c41; /* brown */
-    border: none;
+    border: 2px solid #B298E7;
+    color: #6c5bbf;
+    background: transparent;
 
     transition: 0.3s;
 }
 
 .back-btn:hover {
-    background: #4e342e;
+    background: #5b4bb7; /* same as earlier fixed one */
+    color: white;
+    box-shadow: 0 6px 14px rgba(91, 75, 183, 0.35);
     transform: translateX(-3px);
 }
