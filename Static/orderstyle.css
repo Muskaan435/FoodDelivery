@@ -1,8 +1,8 @@
 /* BODY */
 body {
-    margin: 0;
-    font-family: Arial;
-    background: #FDE4CE;
+    font-family: 'Poppins', sans-serif;
+    background: #faf8ff; /* 🔥 more lighter pastel lavender */
+    background-attachment: fixed;
 }
 
 /* HEADER */
@@ -11,13 +11,12 @@ body {
     align-items: center;
     justify-content: center;
     position: relative;
-    color: white;
     padding: 15px;
 }
 
 .title {
     font-size: 26px;
-    color: #4E070C;
+    color: #5b4bb7;
 }
 
 /* BACK BUTTON */
@@ -25,16 +24,20 @@ body {
     position: absolute;
     left: 20px;
     text-decoration: none;
-    background: #D22701;
-    color: white;
-    padding: 6px 12px;
-    border-radius: 6px;
+    border: 2px solid #B298E7;
+    color: #6c5bbf;
+    padding: 6px 14px;
+    border-radius: 20px;
     font-size: 14px;
+    background: transparent;
     transition: 0.3s;
 }
 
+/* 🔥 FIXED HOVER */
 .back-btn:hover {
-    background: #FF670E;
+    background: #5b4bb7; /* 🔥 header/text color */
+    color: white;
+    box-shadow: 0 6px 14px rgba(91, 75, 183, 0.35);
 }
 
 /* CONTAINER */
@@ -48,45 +51,28 @@ body {
 
 /* CARD */
 .order-card {
-    background: white;
-    color: #4E070C;
+    background: rgba(255, 252, 253, 0.9);
+    color: #2f2a44;
     padding: 20px;
     width: 260px;
     border-radius: 14px;
-    border: 1px solid #f3d3bd;
-
-    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+    border: 1px solid rgba(178, 152, 231, 0.25);
+    box-shadow: 0 6px 18px rgba(91, 75, 183, 0.08);
     transition: all 0.3s ease;
-
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
-/* 🔥 HOVER (FINAL) */
-.order-card:hover {
-    transform: translateY(-8px) scale(1.02);
-    background: #4e070cd3;
-    color: white;
-    box-shadow: 0 12px 28px rgba(0,0,0,0.18);
-}
-
-.order-card:hover span,
-.order-card:hover p,
-.order-card:hover .item-row,
-.order-card:hover .single-item {
-    color: white;
-}
-
 /* TEXT */
 .order-card p {
     margin: 8px 0;
-    color: #444;
+    color: #4b5563;
 }
 
 .order-card span {
     font-weight: bold;
-    color: #4E070C;
+    color: #5b4bb7;
 }
 
 /* ITEMS */
@@ -98,17 +84,50 @@ body {
     padding: 5px 0;
     border-bottom: 1px solid #eee;
     font-size: 14px;
+    color: #4b5563;
 }
 
 .single-item {
     margin-top: 6px;
     font-size: 14px;
+    color: #4b5563;
 }
 
 /* TOTAL */
 .total {
-    margin-top: auto;   /* 🔥 always bottom */
+    margin-top: auto;
     font-weight: bold;
-    color: #D22701;
+    color: #6c5bbf;
     font-size: 16px;
+}
+
+/* ===== ALTERNATING HOVER COLORS ===== */
+
+/* ODD = BLUE */
+.order-card:nth-child(odd):hover {
+    transform: translateY(-8px) scale(1.02);
+    background: rgba(184, 227, 233, 0.50);
+    border-color: rgba(184, 227, 233, 0.95);
+    box-shadow:
+        0 12px 26px rgba(184, 227, 233, 0.25),
+        0 0 20px rgba(184, 227, 233, 0.22);
+}
+
+/* EVEN = PINK */
+.order-card:nth-child(even):hover {
+    transform: translateY(-8px) scale(1.02);
+    background: rgba(245, 184, 213, 0.45);
+    border-color: rgba(245, 184, 213, 0.90);
+    box-shadow:
+        0 12px 26px rgba(245, 184, 213, 0.25),
+        0 0 20px rgba(245, 184, 213, 0.22);
+}
+
+/* TEXT ON HOVER */
+.order-card:hover p,
+.order-card:hover span,
+.order-card:hover .item-row,
+.order-card:hover .single-item,
+.order-card:hover .total {
+    color: #2f2a44;
 }

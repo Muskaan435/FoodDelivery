@@ -8,10 +8,8 @@
 /* BODY */
 body {
     font-family: 'Poppins', sans-serif;
-    background: #fdf6f0;
-    padding: 0;
-    color: #3e2723;
-    overflow-x: hidden;
+    background: #faf8ff;
+    background-attachment: fixed;
 }
 
 /* HEADER */
@@ -26,48 +24,66 @@ body {
 h2 {
     text-align: center;
     margin: 20px 0;
-    color: #5d4037;
+    color: #5b4bb7;
 }
 
 /* GRID */
 .card-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 25px;
-    max-width: 1000px;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 28px;
+    max-width: 1150px;
     margin: auto;
     padding: 20px;
 }
 
 /* CARD */
 .card {
-    background: #fffaf5;
-    padding: 15px;
-    border-radius: 14px;
-    border: 1px solid #e6d3c3;
-    box-shadow: 0 6px 15px rgba(93, 64, 55, 0.12);
+    background: rgba(255, 252, 253, 0.9);
+    padding: 20px;
+    border-radius: 16px;
+    border: 1px solid rgba(178, 152, 231, 0.25);
+    box-shadow: 0 6px 15px rgba(91, 75, 183, 0.10);
     transition: 0.3s;
+    min-height: 210px;
 }
 
-.card:hover {
+/* CARD HOVER */
+/* odd = blue */
+.card-container .card:nth-child(odd):hover {
     transform: translateY(-6px);
-    box-shadow: 0 10px 25px rgba(93, 64, 55, 0.2);
+    background: rgba(184, 227, 233, 0.50);
+    border-color: rgba(184, 227, 233, 0.95);
+    box-shadow:
+        0 10px 25px rgba(184, 227, 233, 0.25),
+        0 0 18px rgba(184, 227, 233, 0.20);
 }
 
-/* 🔥 TOP SECTION (image + info side by side) */
+/* even = pink */
+.card-container .card:nth-child(even):hover {
+    transform: translateY(-6px);
+    background: rgba(245, 184, 213, 0.45);
+    border-color: rgba(245, 184, 213, 0.90);
+    box-shadow:
+        0 10px 25px rgba(245, 184, 213, 0.25),
+        0 0 18px rgba(245, 184, 213, 0.20);
+}
+
+/* TOP SECTION */
 .card-top {
     display: flex;
-    gap: 15px;
+    gap: 20px;
     align-items: center;
 }
 
 /* IMAGE */
 .card-top img {
-    width: 140px;
-    height: 110px;
+    width: 160px;
+    height: 120px;
     object-fit: cover;
-    border-radius: 10px;
+    border-radius: 12px;
     transition: 0.3s;
+    flex-shrink: 0;
 }
 
 .card:hover .card-top img {
@@ -81,19 +97,21 @@ h2 {
 
 .info h3 {
     font-size: 16px;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
+    color: #5b4bb7;
 }
 
 .info p {
     font-size: 14px;
-    color: #8d6e63;
+    color: #4b5563;
+    line-height: 1.5;
 }
 
 /* BUTTON SECTION */
 .card-bottom {
-    margin-top: 15px;
+    margin-top: 20px;
     display: flex;
-    gap: 10px;
+    gap: 12px;
 }
 
 .card-bottom button {
@@ -102,37 +120,50 @@ h2 {
 
 /* BUTTON BASE */
 .card button {
-    padding: 10px 14px;
-    border: none;
-    color: white;
-    border-radius: 8px;
+    padding: 12px 16px;
+    border-radius: 24px;
     font-size: 14px;
     cursor: pointer;
+    background: transparent;
     transition: 0.3s;
+    font-weight: 500;
 }
 
-/* ADD TO CART */
+/* 🔥 UPDATED BUTTON COLORS */
 .card .btn {
-    background: linear-gradient(135deg, #26a69a, #00796b);
+    border: 2px solid #5fbf95;
+    color: #1e7a5a;
+    background: transparent;
 }
 
-.card .btn:hover {
-    background: linear-gradient(135deg, #00796b, #004d40);
-}
-
-/* ORDER NOW */
 .card .order {
-    background: linear-gradient(135deg, #ff9800, #f57c00);
+    border: 2px solid #f4a261;
+    color: #c96a1a;
+    background: transparent;
+}
+
+/* 🔥 HOVER SAME AS BORDER */
+.card .btn:hover {
+    background: #5fbf95;
+    border-color: #5fbf95;
+    color: white;
+    box-shadow: 0 6px 14px rgba(95, 191, 149, 0.35);
 }
 
 .card .order:hover {
-    background: #ef6c00;
+    background: #f4a261;
+    border-color: #f4a261;
+    color: white;
+    box-shadow: 0 6px 14px rgba(244, 162, 97, 0.35);
 }
 
 /* DISABLED */
 .card button:disabled {
-    background: #b0a59f;
+    background: rgba(210, 210, 220, 0.7);
+    border-color: rgba(190, 190, 205, 0.8);
+    color: #7b8190;
     cursor: not-allowed;
+    box-shadow: none;
 }
 
 /* CART ICON */
@@ -140,14 +171,14 @@ h2 {
     font-size: 22px;
     cursor: pointer;
     position: relative;
-    color: #5d4037;
+    color: #5b4bb7;
 }
 
 #cart-count {
     position: absolute;
     top: -10px;
     right: -10px;
-    background: #ff6f61;
+    background: #B298E7;
     color: white;
     font-size: 12px;
     padding: 3px 7px;
@@ -162,17 +193,19 @@ h2 {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(62, 39, 35, 0.5);
+    background: rgba(91, 75, 183, 0.25);
 }
 
 .modal-content {
-    background: #fffaf5;
+    background: rgba(255, 252, 253, 0.95);
     width: 300px;
     margin: 100px auto;
     padding: 20px;
-    border-radius: 10px;
+    border-radius: 12px;
     text-align: center;
-    border: 1px solid #e6d3c3;
+    border: 1px solid rgba(178, 152, 231, 0.25);
+    color: #2f2a44;
+    box-shadow: 0 10px 25px rgba(91, 75, 183, 0.12);
 }
 
 /* POPUP */
@@ -181,26 +214,30 @@ h2 {
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
-    background: #5d4037;
+    background: #B298E7;
     color: white;
     padding: 10px 20px;
-    border-radius: 6px;
+    border-radius: 8px;
     display: none;
+    box-shadow: 0 8px 18px rgba(178, 152, 231, 0.35);
 }
 
 /* BACK BUTTON */
 .back-btn {
     text-decoration: none;
-    background: linear-gradient(135deg, #8d6e63, #5d4037);
-    color: white;
+    border: 2px solid #B298E7;
+    color: #6c5bbf;
     padding: 8px 14px;
-    border-radius: 8px;
+    border-radius: 20px;
     font-size: 14px;
     transition: 0.3s;
+    background: transparent;
 }
 
 .back-btn:hover {
-    background: #4e342e;
+    background: #5b4bb7;
+    color: white;
+    box-shadow: 0 6px 14px rgba(91, 75, 183, 0.35);
     transform: translateX(-6px);
 }
 
@@ -210,28 +247,68 @@ h2 {
     bottom: 0;
     left: 0;
     width: 100%;
-    background: #5d4037;
-    color: #fff;
+    background: rgba(255, 252, 253, 0.96);
+    color: #2f2a44;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 30px;   /* 🔥 left-right gap badhaya */
+    padding: 15px 30px;
     font-size: 16px;
-    box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
+    box-shadow: 0 -2px 10px rgba(91, 75, 183, 0.10);
     z-index: 1000;
+    border-top: 1px solid rgba(178, 152, 231, 0.25);
 }
 
 .cart-footer button {
-    background: #ff9800;
-    color: white;
-    border: none;
-    padding: 10px 18px;   /* 🔥 thoda bada */
-    border-radius: 8px;
+    background: transparent;
+    color: #6c5bbf;
+    border: 2px solid #B298E7;
+    padding: 10px 18px;
+    border-radius: 20px;
     cursor: pointer;
     font-weight: bold;
-    margin-left: 15px;    /* 🔥 text se gap */
+    margin-left: 15px;
+    transition: 0.3s;
+}
+
+.cart-footer button:hover {
+    background: #5b4bb7;
+    color: white;
+    box-shadow: 0 6px 14px rgba(178, 152, 231, 0.35);
 }
 
 .hidden {
     display: none;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .card-container {
+        grid-template-columns: 1fr;
+        padding: 16px;
+    }
+
+    .card {
+        min-height: auto;
+    }
+
+    .card-top {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .card-top img {
+        width: 100%;
+        height: 180px;
+    }
+
+    .card-bottom {
+        flex-direction: column;
+    }
+
+    .cart-footer {
+        padding: 14px 16px;
+        flex-direction: column;
+        gap: 10px;
+    }
 }
