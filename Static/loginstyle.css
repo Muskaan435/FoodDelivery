@@ -7,33 +7,44 @@
 }
 
 /* ================= BACKGROUND ================= */
+/* ================= BACKGROUND ================= */
 body {
     height: 100vh;
-    background: linear-gradient(135deg, #fdf6f0, #f3e5dc);
+    background: #faf8ff; /* 🔥 more lighter pastel lavender */
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-/* ================= GLASS CARD ================= */
+/* ================= CARD ================= */
 .container {
     backdrop-filter: blur(18px);
-    background: rgba(255, 250, 245, 0.65); /* thoda zyada premium glass */
+    background: rgba(255, 252, 253, 0.95);
     padding: 40px;
     border-radius: 20px;
     width: 350px;
     text-align: center;
 
-    border: 1px solid rgba(230, 211, 195, 0.7);
+    border: 1px solid rgba(178, 152, 231, 0.30);
 
-    box-shadow: 
-        0 10px 30px rgba(0, 0, 0, 0.12),
-        0 0 25px rgba(109, 76, 65, 0.25);
+    box-shadow:
+        0 10px 30px rgba(91, 75, 183, 0.10);
+
+    transition: all 0.3s ease;
+}
+
+/* ================= CARD HOVER ================= */
+.container:hover {
+    transform: translateY(-3px);
+    background: #dff1f5;
+    box-shadow:
+        0 12px 35px rgba(91, 75, 183, 0.15),
+        0 0 20px rgba(223, 241, 245, 0.6);
 }
 
 /* ================= TITLE ================= */
 .container h2 {
-    color: #5d4037;
+    color: #5b4bb7;
     margin-bottom: 25px;
     font-weight: 600;
 }
@@ -44,22 +55,23 @@ body {
     padding: 12px;
     margin: 10px 0;
     border-radius: 10px;
-    border: none;
+    border: 2px solid #B298E7;
     outline: none;
 
-    background: rgba(255, 255, 255, 0.85);
-    color: #3e2723;
+    background: rgba(255, 255, 255, 0.96);
+    color: #1f2937;
 
     transition: 0.3s;
 }
 
 .container input::placeholder {
-    color: rgba(62, 39, 35, 0.5);
+    color: rgba(91, 75, 183, 0.55);
 }
 
 .container input:focus {
     background: #ffffff;
-    box-shadow: 0 0 12px rgba(109, 76, 65, 0.6);
+    border-color: #8a74d6;
+    box-shadow: 0 0 10px rgba(178, 152, 231, 0.25);
 }
 
 /* ================= BUTTON ================= */
@@ -69,10 +81,10 @@ body {
     margin-top: 15px;
 
     border-radius: 25px;
-    border: none;
+    border: 2px solid #B298E7;
 
-    background: linear-gradient(135deg, #8d6e63, #5d4037);
-    color: white;
+    background: transparent;
+    color: #6c5bbf;
 
     font-size: 16px;
     font-weight: 600;
@@ -81,31 +93,30 @@ body {
     transition: all 0.3s ease;
 }
 
-/* 🔥 PREMIUM HOVER */
+/* ================= BUTTON HOVER ================= */
 .container button:hover {
-    background: #ffffff;
-    color: #5d4037;
-    border: 1px solid #5d4037;
-
-    box-shadow: 0 0 18px rgba(93, 64, 55, 0.5);
+    background: #5b4bb7; /* 🔥 updated */
+    border-color: #5b4bb7; /* 🔥 updated */
+    color: #ffffff;
+    box-shadow: 0 8px 18px rgba(91, 75, 183, 0.35);
     transform: translateY(-2px);
 }
 
-/* ================= SWITCH TEXT ================= */.switch-text {
+/* ================= SWITCH TEXT ================= */
+.switch-text {
     margin-top: 18px;
     text-align: center;
-    color: #5d4037;
+    color: #4b5563;
     font-size: 15px;
 }
 
 .switch-text a {
-    color: #6d4c41;
+    color: #5b4bb7;
     text-decoration: none;
     font-weight: 600;
     position: relative;
 }
 
-/* underline animation */
 .switch-text a::after {
     content: "";
     position: absolute;
@@ -113,7 +124,7 @@ body {
     bottom: -3px;
     width: 0%;
     height: 2px;
-    background: #5d4037;
+    background: #5b4bb7;
     transition: 0.3s;
 }
 
@@ -122,8 +133,9 @@ body {
 }
 
 .switch-text a:hover {
-    color: #3e2723;
+    color: #44358f;
 }
+
 /* ================= RESPONSIVE ================= */
 @media (max-width: 400px) {
     .container {
