@@ -89,19 +89,25 @@ html, body {
     font-size: 40px;
     margin-bottom: 15px;
     color: #5b4bb7;
-    line-height: 1.4;
+    line-height: 0.7; /* 🔥 reduce spacing between lines */
 }
 
 .hero-center p {
     color: #4b5563;
     margin-bottom: 25px;
+    line-height: 1.5;
 }
 
 .hero-center h1 span {
     color: #5b4bb7;
 }
 
-/* ================= TYPING ================= */
+/* 🔥 FIXED HEADING TO STAY IN 2 LINES */
+.hero-center h1 span:first-child {
+    display: block;
+    white-space: nowrap;
+}
+
 .typing-text {
     font-family: 'Pacifico', cursive;
     color: #5b4bb7;
@@ -109,6 +115,7 @@ html, body {
     overflow: hidden;
     white-space: nowrap;
     width: 0;
+    max-width: max-content;
     display: inline-block;
     animation: typing 3s steps(22, end) forwards, blink 0.8s infinite;
 }
@@ -125,7 +132,7 @@ html, body {
 /* ================= SEARCH ================= */
 .search-box {
     display: flex;
-    align-items: stretch; /* 🔥 ensures same height */
+    align-items: stretch;
     gap: 15px;
     max-width: 520px;
     margin: auto;
@@ -145,7 +152,7 @@ html, body {
 
 /* BUTTON HEIGHT FIX */
 .search-box button {
-    padding: 15px 22px;  /* 🔥 SAME HEIGHT AS INPUT */
+    padding: 15px 22px;
 }
 
 /* PLACEHOLDER */
@@ -164,7 +171,8 @@ html, body {
     top: 100%;
     left: 50%;
     transform: translateX(-50%);
-    width: 100%;
+    width: auto;
+    min-width: max-content;
     margin-top: 15px;
 }
 
@@ -180,7 +188,7 @@ html, body {
     justify-content: center;
     gap: 25px;
     margin-top: 10px;
-    flex-wrap: wrap;
+    flex-wrap: nowrap; /* 🔥 keeps 2 cards side by side */
 }
 
 .card {
@@ -196,6 +204,7 @@ html, body {
     flex-direction: column;
     justify-content: center;
     transition: 0.3s;
+    flex-shrink: 0;
 }
 
 .card:hover {
@@ -255,5 +264,18 @@ html, body {
     .search-box input,
     .search-box button {
         width: 100%;
+    }
+
+    .hero-center h1 span:first-child {
+        white-space: normal;
+    }
+
+    .cards-container {
+        flex-wrap: wrap;
+    }
+
+    .results {
+        width: 100%;
+        min-width: unset;
     }
 }

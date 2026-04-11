@@ -1,8 +1,10 @@
 /* ===== BASE ===== */
 body {
     font-family: 'Poppins', sans-serif;
-    background: #faf8ff; /* 🔥 more lighter pastel lavender */
+    background: #faf8ff;
     background-attachment: fixed;
+    margin: 0;
+    overflow: hidden;
 }
 
 /* ===== HEADER ===== */
@@ -20,6 +22,7 @@ h1 {
     height: calc(100vh - 70px);
     padding: 20px 40px;
     gap: 30px;
+    overflow: hidden;
 }
 
 /* ===== LEFT ===== */
@@ -33,7 +36,7 @@ h1 {
 
 /* ===== RIGHT ===== */
 .right {
-    flex: 1.5; /* thoda bigger */
+    flex: 1.35;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -57,31 +60,26 @@ h1 {
     border-color: rgba(184, 227, 233, 0.95);
 }
 
-/* hover = only lift, no color switch */
+/* hover removed */
 .left .stat-card:hover {
-    transform: translateY(-6px);
-    box-shadow:
-        0 12px 26px rgba(184, 227, 233, 0.25),
-        0 0 20px rgba(184, 227, 233, 0.22);
+    transform: none;
+    box-shadow: 0 8px 20px rgba(91, 75, 183, 0.08);
 }
 
 /* ===== CARD ===== */
 .card {
     padding: 18px;
     border-radius: 14px;
-    background: rgba(245, 184, 213, 0.45); /* fixed pink */
+    background: rgba(245, 184, 213, 0.45);
     border: 1px solid rgba(245, 184, 213, 0.90);
-    box-shadow:
-        0 8px 20px rgba(91, 75, 183, 0.08);
+    box-shadow: 0 8px 20px rgba(91, 75, 183, 0.08);
     transition: all 0.3s ease;
 }
 
-/* hover = only lift, no color switch */
+/* hover removed */
 .left .card:hover {
-    transform: translateY(-6px);
-    box-shadow:
-        0 12px 26px rgba(245, 184, 213, 0.25),
-        0 0 20px rgba(245, 184, 213, 0.22);
+    transform: none;
+    box-shadow: 0 8px 20px rgba(91, 75, 183, 0.08);
 }
 
 /* ===== ITEMS ===== */
@@ -100,16 +98,28 @@ h1 {
     color: #5b4bb7;
 }
 
-/* ===== CHART ===== */
-canvas {
-    width: 560px !important;   /* bigger */
-    height: 560px !important;  /* bigger */
-    display: block;
-    padding: 18px;             /* extra space around */
-    border-radius: 20px;
-    background: rgba(255, 252, 253, 0.92);
+/* ===== CHART CARD ===== */
+.chart-card {
+    width: 500px;   /* smaller card */
+    height: 430px;  /* smaller card */
+    padding: 14px 16px;
+    border-radius: 24px;
+    background: rgba(255, 252, 253, 0.96);
     border: 1px solid rgba(178, 152, 231, 0.22);
     box-shadow: 0 0 25px rgba(178, 152, 231, 0.18);
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ===== DONUT ===== */
+canvas {
+    width: 100% !important;
+    height: 100% !important;
+    display: block;
+    background: transparent;
+    box-shadow: none;
 }
 
 /* ===== BACK BUTTON ===== */
@@ -117,22 +127,18 @@ canvas {
     position: absolute;
     top: 20px;
     left: 20px;
-
     text-decoration: none;
     font-size: 14px;
-
     padding: 8px 14px;
     border-radius: 20px;
-
     border: 2px solid #B298E7;
     color: #6c5bbf;
     background: transparent;
-
     transition: 0.3s;
 }
 
 .back-btn:hover {
-    background: #5b4bb7; /* same as earlier fixed one */
+    background: #5b4bb7;
     color: white;
     box-shadow: 0 6px 14px rgba(91, 75, 183, 0.35);
     transform: translateX(-3px);

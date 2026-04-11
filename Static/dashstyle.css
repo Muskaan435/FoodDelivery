@@ -8,7 +8,7 @@
 /* BODY */
 body {
     font-family: 'Poppins', sans-serif;
-    background: #faf8ff; /* 🔥 more lighter pastel lavender */
+    background: #faf8ff;
     background-attachment: fixed;
 }
 
@@ -16,16 +16,13 @@ body {
 .header,
 .navbar {
     width: 100%;
-    background: #5b4bb7 !important; /* 🔥 FINAL FIX */
+    background: #5b4bb7 !important;
     color: white !important;
-
     padding: 15px 20px;
-
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
-
     box-shadow: 0 4px 12px rgba(91, 75, 183, 0.18);
 }
 
@@ -209,11 +206,11 @@ body {
 
 .grid .card-link:nth-child(4n) .card:hover {
     transform: translateY(-6px);
-    background: rgba(249, 190, 221, 0.50);
-    border-color: rgba(249, 190, 221, 0.95);
+    background: rgba(184, 227, 233, 0.50);
+    border-color: rgba(184, 227, 233, 0.95);
     box-shadow:
-        0 12px 26px rgba(249, 190, 221, 0.25),
-        0 0 20px rgba(249, 190, 221, 0.22);
+        0 12px 26px rgba(184, 227, 233, 0.25),
+        0 0 20px rgba(184, 227, 233, 0.22);
 }
 
 /* SCROLL */
@@ -271,11 +268,11 @@ body {
 
 .scroll-container .card-link:nth-child(4n) .scroll-card:hover {
     transform: translateY(-6px);
-    background: rgba(249, 190, 221, 0.50);
-    border-color: rgba(249, 190, 221, 0.95);
+    background: rgba(184, 227, 233, 0.50);
+    border-color: rgba(184, 227, 233, 0.95);
     box-shadow:
-        0 12px 26px rgba(249, 190, 221, 0.25),
-        0 0 20px rgba(249, 190, 221, 0.22);
+        0 12px 26px rgba(184, 227, 233, 0.25),
+        0 0 20px rgba(184, 227, 233, 0.22);
 }
 
 /* VIEW MORE */

@@ -18,12 +18,10 @@
 
         <!-- STATS -->
         <div class="stats">
-
             <div class="stat-card">
                 <h2 class="counter" data-target="{{ orders }}">0</h2>
                 <p>Your Orders</p>
             </div>
-
         </div>
 
         <!-- TOP ITEMS -->
@@ -46,18 +44,17 @@
 
     <!-- RIGHT -->
     <div class="right">
-        <canvas id="myChart"></canvas>
+        <div class="chart-card">
+            <canvas id="myChart"></canvas>
+        </div>
     </div>
 
 </div>
 
 <!-- DATA PASS -->
-<div id="data"
-     data-items='{{ popular_items | tojson }}'>
-</div>
+<div id="data" data-items='{{ popular_items | tojson }}'></div>
 
 <script>
-
 // 📊 CHART
 const dataDiv = document.getElementById("data");
 const rawData = JSON.parse(dataDiv.getAttribute("data-items") || "[]");
@@ -82,8 +79,8 @@ new Chart(ctx, {
         maintainAspectRatio: false,
         layout: {
             padding: {
-                top: 35,
-                bottom: 10
+                top: 14,
+                bottom: 6
             }
         },
         animation: {
@@ -97,14 +94,14 @@ new Chart(ctx, {
             legend: {
                 position: 'top',
                 labels: {
-                    color: "#000000",   // 🔥 FIXED (BLACK TEXT)
+                    color: "#000000",
                     font: {
-                        size: 18,
+                        size: 16,
                         weight: '600'
                     },
-                    boxWidth: 18,
-                    boxHeight: 18,
-                    padding: 28,
+                    boxWidth: 14,
+                    boxHeight: 14,
+                    padding: 18,
                     usePointStyle: true,
                     pointStyle: 'rectRounded'
                 }
@@ -112,27 +109,26 @@ new Chart(ctx, {
         }
     }
 });
-    // 🔢 COUNTER ANIMATION
-    const counters = document.querySelectorAll('.counter');
 
-    counters.forEach(counter => {
-        const update = () => {
-            const target = +counter.getAttribute('data-target');
-            const current = +counter.innerText;
+// 🔢 COUNTER ANIMATION
+const counters = document.querySelectorAll('.counter');
 
-            const increment = target / 40;
+counters.forEach(counter => {
+    const update = () => {
+        const target = +counter.getAttribute('data-target');
+        const current = +counter.innerText;
+        const increment = target / 40;
 
-            if (current < target) {
-                counter.innerText = Math.ceil(current + increment);
-                setTimeout(update, 50);
-            } else {
-                counter.innerText = target;
-            }
-        };
+        if (current < target) {
+            counter.innerText = Math.ceil(current + increment);
+            setTimeout(update, 50);
+        } else {
+            counter.innerText = target;
+        }
+    };
 
-        update();
-    });
-
+    update();
+});
 </script>
 
 </body>
