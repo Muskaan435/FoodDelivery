@@ -130,19 +130,35 @@ function placeOrder() {
     .then(res => {
         if (res.status === 401) {
             window.location.href = "/login";
-            return;
+            return null;
         }
         return res.json();
     })
-    .then(() => {
-        cart = [];
-        localStorage.removeItem("cart");
-        displayCart();
+    .then(data => {
+    if (!data) return;
 
-        showSuccessPopup();
+    if (data.order_id) {
+
+        const popup = document.getElementById("success-popup");
+
+        // 🎉 show popup + confetti
+        popup.classList.add("show");
+        startConfetti();
+
+        setTimeout(() => {
+            cart = [];
+            localStorage.removeItem("cart");
+
+            // 👉 redirect to recipe
+            window.location.href = "/recipe/" + data.order_id;
+        }, 2400);
+    }
+})
+    .catch(err => {
+        console.error("Order error:", err);
+        alert("Something went wrong. Try again.");
     });
 }
-
 /* 🎉 POPUP FUNCTION */
 function showSuccessPopup() {
     const popup = document.getElementById("success-popup");

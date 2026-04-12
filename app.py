@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request, redirect, session
 import mysql.connector
+import random
 
+from recipes import get_lazy_recipe
 # ML imports
 from MachineLearning.recommend import get_recommendations
 from MachineLearning.recommender import train_model, recommend as ml_recommend
@@ -137,15 +139,15 @@ def dashboard():
 
     # Personalized recommendation
     cursor.execute("""
-        SELECT r.restaurant_id, r.name, r.location, COUNT(*) as freq
-        FROM orders o
-        JOIN order_items oi ON o.order_id = oi.order_id
-        JOIN menu m ON oi.item_id = m.item_id
-        JOIN restaurants r ON m.restaurant_id = r.restaurant_id
-        WHERE o.user_id = %s
-        GROUP BY r.restaurant_id
-        ORDER BY freq DESC
-        LIMIT 3
+    SELECT r.restaurant_id, r.name, r.location, SUM(oi.quantity) as freq
+    FROM orders o
+    JOIN order_items oi ON o.order_id = oi.order_id
+    JOIN menu m ON oi.item_id = m.item_id
+    JOIN restaurants r ON m.restaurant_id = r.restaurant_id
+    WHERE o.user_id = %s
+    GROUP BY r.restaurant_id
+    ORDER BY freq DESC
+    LIMIT 3
     """, (user_id,))
 
     recommended = cursor.fetchall()
@@ -284,7 +286,19 @@ def place_order():
     except Exception as e:
         print("Cart Order Error:", e)
         return {"message": "Something went wrong"}, 500
+# ================= RECIPE =================
+@app.route('/recipe/<int:order_id>')
+def recipe(order_id):
 
+    import json, os
+
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    file_path = os.path.join(base_dir, "recipes.json")
+
+    with open(file_path, "r", encoding="utf-8") as file:
+        recipes = json.load(file)
+
+    return render_template('recipe.html', recipes=recipes)
 # ================= VIEW ORDERS =================
 @app.route('/orders')
 def orders():
@@ -328,15 +342,15 @@ def analytics():
     total_orders = cursor.fetchone()[0]
 
     cursor.execute("""
-        SELECT m.item_name, COUNT(*) as count
-        FROM order_items oi
-        JOIN orders o ON oi.order_id = o.order_id
-        JOIN menu m ON oi.item_id = m.item_id
-        WHERE o.user_id = %s
-        GROUP BY oi.item_id
-        ORDER BY count DESC
-        LIMIT 3
-    """, (user_id,))
+    SELECT m.item_name, SUM(oi.quantity) as count
+    FROM order_items oi
+    JOIN orders o ON oi.order_id = o.order_id
+    JOIN menu m ON oi.item_id = m.item_id
+    WHERE o.user_id = %s
+    GROUP BY oi.item_id
+    ORDER BY count DESC
+    LIMIT 3
+""", (user_id,))
     
     popular_items = cursor.fetchall()
 

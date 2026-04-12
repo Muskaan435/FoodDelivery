@@ -1,0 +1,93 @@
+[
+  {
+    "title": "1-Min Mug Brownie",
+    "time": "1 min",
+    "image": "brownie.jpg",
+    "ingredients": ["Cocoa powder", "Sugar", "Milk", "Flour"],
+    "steps": ["Mix everything", "Microwave 60 sec", "Enjoy 😋"]
+  },
+  {
+    "title": "Bread Pizza",
+    "time": "5 min",
+    "ingredients": ["Bread", "Ketchup", "Cheese"],
+    "steps": ["Spread ketchup", "Add cheese", "Toast"]
+  },
+  {
+    "title": "Veg Sandwich",
+    "time": "3 min",
+    "ingredients": ["Bread", "Butter", "Cucumber"],
+    "steps": ["Spread butter", "Add cucumber", "Close"]
+  },
+  {
+    "title": "Maggi",
+    "time": "2 min",
+    "ingredients": ["Maggi", "Water", "Masala"],
+    "steps": ["Boil water", "Add maggi", "Add masala"]
+  },
+  {
+    "title": "Omelette",
+    "time": "4 min",
+    "ingredients": ["Eggs", "Salt", "Onion"],
+    "steps": ["Beat eggs", "Cook on pan"]
+  },
+  {
+    "title": "Fried Rice",
+    "time": "10 min",
+    "ingredients": ["Rice", "Veggies", "Soy sauce"],
+    "steps": ["Heat pan", "Add veggies", "Add rice"]
+  },
+  {
+    "title": "White Sauce Pasta",
+    "time": "15 min",
+    "ingredients": ["Pasta", "Milk", "Butter", "Flour"],
+    "steps": ["Boil pasta", "Make sauce", "Mix together"]
+  },
+  {
+    "title": "Taco",
+    "time": "10 min",
+    "ingredients": ["Taco shell", "Veggies", "Sauce"],
+    "steps": ["Fill taco", "Add sauce", "Serve"]
+  },
+  {
+    "title": "French Fries",
+    "time": "15 min",
+    "ingredients": ["Potato", "Oil", "Salt"],
+    "steps": ["Cut potatoes", "Fry", "Add salt"]
+  },
+  {
+    "title": "Pancake",
+    "time": "10 min",
+    "ingredients": ["Flour", "Milk", "Egg"],
+    "steps": ["Mix batter", "Cook on pan"]
+  },
+  {
+    "title": "Fruit Bowl",
+    "time": "5 min",
+    "ingredients": ["Apple", "Banana", "Strawberry"],
+    "steps": ["Cut fruits", "Mix", "Serve"]
+  },
+  {
+    "title": "Salad",
+    "time": "5 min",
+    "ingredients": ["Cucumber", "Tomato", "Onion"],
+    "steps": ["Chop veggies", "Mix", "Add salt"]
+  },
+  {
+    "title": "Scrambled Eggs",
+    "time": "5 min",
+    "ingredients": ["Eggs", "Butter", "Salt"],
+    "steps": ["Beat eggs", "Cook on pan"]
+  },
+  {
+    "title": "Banana Shake",
+    "time": "3 min",
+    "ingredients": ["Banana", "Milk", "Sugar"],
+    "steps": ["Blend everything", "Serve chilled"]
+  },
+  {
+    "title": "Cheese Toast",
+    "time": "5 min",
+    "ingredients": ["Bread", "Cheese", "Butter"],
+    "steps": ["Spread butter", "Add cheese", "Toast"]
+  }
+]

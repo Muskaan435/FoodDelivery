@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Recipes</title>
+
+    <style>
+        *{
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    background: #faf8ff; /* lavender theme */
+    padding: 20px;
+}
+
+/* CARD */
+#card {
+    background: rgba(255, 252, 253, 0.95);
+    padding: 20px;
+    border-radius: 20px;
+    width: 320px;
+    margin: auto;
+    margin-top: 3%;
+    box-shadow: 0 10px 25px rgba(91, 75, 183, 0.12);
+    border: 1px solid rgba(178, 152, 231, 0.25);
+}
+
+/* IMAGE BOX */
+#img-box {
+    width: 100%;
+    height: 180px;
+    background: rgba(184, 227, 233, 0.35);
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #5b4bb7;
+    font-weight: bold;
+}
+
+/* LIST */
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+/* DOTS */
+#dots {
+    margin-top: 25px;
+}
+
+.dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    margin: 4px;
+    background: #d6ccf5;
+    border-radius: 50%;
+}
+
+.active {
+    background: #5b4bb7;
+}
+
+/* BUTTON */
+button {
+    background: transparent;
+    color: #6c5bbf;
+    padding: 8px 15px;
+    border-radius: 20px;
+    border: 2px solid #B298E7;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #5b4bb7;
+    color: white;
+    border-color: #b8e3e9;
+    box-shadow: 0 6px 14px rgba(184, 227, 233, 0.35);
+}
+
+/* CLOSE BUTTON */
+.close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: #e89ac2;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.close-btn:hover {
+    background: #5b4bb7;
+}
+.fade {
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {opacity: 0; transform: translateY(10px);}
+    to {opacity: 1; transform: translateY(0);}
+}
+    </style>
+</head>
+
+<body>
+
+<button class="close-btn" onclick="goBack()">✖</button>
+
+<h2 style="margin-top: 2.5%;">While your food is coming...</h2>
+<p id="funText"></p>
+
+<div id="card">
+
+    <!-- IMAGE PLACEHOLDER -->
+    <img id="food-img"
+     style="width:100%; height:180px; object-fit:cover; border-radius:15px; margin-bottom:10px;">
+
+    <h2 id="title"></h2>
+    <p id="time"></p>
+
+    <h3>Ingredients</h3>
+    <ul id="ingredients"></ul>
+
+    <h3>Steps</h3>
+    <ul id="steps"></ul>
+
+</div>
+
+<!-- DOTS -->
+<div id="dots"></div>
+<div style="margin-top:10px;">
+    <button onclick="prev()">Prev</button>
+    <button onclick="next()">Next</button>
+</div>
+<script>
+
+let recipes = {{ recipes | tojson }};
+let index = 0;
+const messages = [
+    "Don’t just wait… cook something!",
+    "Chef mode ON!",
+    "1 min challenge — try this!",
+    "Your food is coming… but cook meanwhile!"
+];
+
+function showRecipe(i) {
+    let card = document.getElementById("card");
+    card.classList.remove("fade");
+    void card.offsetWidth;
+    card.classList.add("fade");
+    let r = recipes[i];
+
+    document.getElementById("title").innerText = r.title;
+    document.getElementById("time").innerText = "⏱ " + r.time;
+
+    // Placeholder text (later image add karna)
+    let img = document.getElementById("food-img");
+
+        img.src = "/static/uploads/recipes/" + r.image;
+
+        img.onerror = function () {
+            this.src = "/static/images/default.jpg";
+        };
+
+    let ing = "";
+    r.ingredients.forEach(x => ing += `<li>${x}</li>`);
+    document.getElementById("ingredients").innerHTML = ing;
+
+    let st = "";
+    r.steps.forEach(x => st += `<li>${x}</li>`);
+    document.getElementById("steps").innerHTML = st;
+
+    renderDots();
+    document.getElementById("funText").innerText =
+    messages[Math.floor(Math.random() * messages.length)];
+}
+
+function renderDots() {
+    let html = "";
+
+    for (let i = 0; i < recipes.length; i++) {
+        html += `<span class="dot ${i === index ? 'active' : ''}"></span>`;
+    }
+
+    document.getElementById("dots").innerHTML = html;
+}
+
+function next() {
+    index = (index + 1) % recipes.length;
+    showRecipe(index);
+}
+
+function prev() {
+    index = (index - 1 + recipes.length) % recipes.length;
+    showRecipe(index);
+}
+
+function goBack() {
+    window.location.href = "/dashboard";
+}
+
+/* SWIPE SUPPORT */
+let startX = 0;
+
+document.addEventListener("touchstart", e => {
+    startX = e.touches[0].clientX;
+});
+
+document.addEventListener("touchend", e => {
+    let endX = e.changedTouches[0].clientX;
+
+    if (startX - endX > 50) next();   // swipe left
+    if (endX - startX > 50) prev();   // swipe right
+});
+
+// initial load
+showRecipe(index);
+
+</script>
+
+</body>
+</html>
