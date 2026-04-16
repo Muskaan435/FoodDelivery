@@ -21,11 +21,15 @@ db = mysql.connector.connect(
 cursor = db.cursor(buffered=True)
 
 # ================= HOME + SEARCH =================
+
 @app.route('/', methods=['GET', 'POST'])
 def home():
     query = ""
     results = []
 
+    cursor = db.cursor(dictionary=True)
+
+    # 🔍 SEARCH
     if request.method == 'POST':
         query = request.form.get('search')
 
@@ -35,18 +39,22 @@ def home():
             search_term = "%" + query + "%"
 
             search_cursor.execute("""
-                SELECT r.name AS restaurant_name, r.location, m.item_name, r.restaurant_id
+                SELECT 
+                    r.name AS restaurant_name,
+                    r.location,
+                    m.item_name,
+                    m.item_id,
+                    r.restaurant_id
                 FROM restaurants r
                 JOIN menu m ON r.restaurant_id = m.restaurant_id
                 WHERE m.item_name LIKE %s
             """, (search_term,))
 
-            all_results = search_cursor.fetchall()  # ✅ ab sahi jagah
+            all_results = search_cursor.fetchall()
 
             final_results = []
             seen = set()
 
-            # unique restaurants first
             for item in all_results:
                 if item['restaurant_id'] not in seen:
                     final_results.append(item)
@@ -54,7 +62,6 @@ def home():
                 if len(final_results) == 3:
                     break
 
-            # fill remaining
             if len(final_results) < 3:
                 for item in all_results:
                     if item not in final_results:
@@ -64,7 +71,43 @@ def home():
 
             results = final_results
 
-    return render_template('index.html', results=results, query=query)
+    # 🔥 MOST ORDERED
+    cursor.execute("""
+        SELECT 
+            m.item_name,
+            m.item_id,
+            m.restaurant_id,
+            SUM(oi.quantity) as total_orders
+        FROM order_items oi
+        JOIN menu m ON oi.item_id = m.item_id
+        GROUP BY m.item_id, m.item_name, m.restaurant_id
+        ORDER BY total_orders DESC
+        LIMIT 3
+    """)
+    most_ordered = cursor.fetchall()
+
+    # 🏆 FAMOUS RESTAURANTS
+    cursor.execute("""
+        SELECT 
+            r.name,
+            r.restaurant_id,
+            SUM(oi.quantity) as total_orders
+        FROM order_items oi
+        JOIN menu m ON oi.item_id = m.item_id
+        JOIN restaurants r ON m.restaurant_id = r.restaurant_id
+        GROUP BY r.restaurant_id, r.name
+        ORDER BY total_orders DESC
+        LIMIT 3
+    """)
+    famous_restaurants = cursor.fetchall()
+
+    return render_template(
+        'index.html',
+        results=results,
+        query=query,
+        most_ordered=most_ordered,
+        famous_restaurants=famous_restaurants
+    )
 # ================= REGISTER =================
 @app.route('/register', methods=['GET', 'POST'])
 def register():

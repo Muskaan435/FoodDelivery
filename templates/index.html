@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Food Delivery</title>
+    <title>Smart Bytes</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="icon" type="image/png" href=".//static/images/logo.png">
 </head>
 <body>
 
@@ -17,19 +18,12 @@
 <!-- HERO -->
 <div class="hero">
 
-    <!-- LEFT IMAGE -->
     <div class="hero-left">
-        <img src="{{ url_for('static', filename='images/biryani.png') }}" alt="Biryani">
+        <img src="{{ url_for('static', filename='images/biryani.png') }}">
     </div>
 
-    <!-- CENTER -->
     <div class="hero-center">
-
-        <h1>
-    <span>Order Food From Your</span><br>
-    <span>Favorite Restaurants </span>
-</h1>
-
+        <h1>Order Food From Your Favorite Restaurants</h1>
         <p>Fast delivery at your doorstep</p>
 
         <!-- SEARCH -->
@@ -44,6 +38,7 @@
             <button type="submit">Search</button>
         </form>
 
+        <!-- 🔍 RESULTS -->
         {% if query %}
         <div class="results">
 
@@ -53,8 +48,16 @@
                 <div class="cards-container">
                     {% for item in results %}
                     <div class="card">
+
+                        <!-- ✅ IMAGE FROM DB -->
+                        <img 
+                            src="{{ url_for('static', filename='uploads/menu/' ~ item.restaurant_id ~ '/' ~ item.item_id ~ '.jpg') }}"
+                            onerror="this.src='https://picsum.photos/300/200'"
+                            class="card-img"
+                        >
                         <h3>{{ item.item_name }}</h3>
                         <p>{{ item.restaurant_name }}</p>
+
                     </div>
                     {% endfor %}
                 </div>
@@ -62,7 +65,7 @@
             {% else %}
                 <div class="no-results">
                     <h3>No results found 😕</h3>
-                    <p>Try searching something else</p>
+                    <p>Try something else</p>
                 </div>
             {% endif %}
 
@@ -71,12 +74,100 @@
 
     </div>
 
-    <!-- RIGHT IMAGE -->
     <div class="hero-right">
-        <img src="{{ url_for('static', filename='images/pizza.png') }}" alt="Pizza">
+        <img src="{{ url_for('static', filename='images/pizza.png') }}">
     </div>
 
 </div>
+
+<!-- 🔥 MOST ORDERED -->
+<div class="section">
+    <h2>🔥 Most Ordered Dishes</h2>
+
+    <div class="cards-container">
+        {% for item in most_ordered %}
+        <div class="card">
+
+            <img 
+                src="{{ url_for('static', filename='uploads/menu/' ~ item.restaurant_id ~ '/' ~ item.item_id ~ '.jpg') }}"
+                onerror="this.src='https://picsum.photos/300/200'"
+                class="card-img"
+            >           
+
+            <h3>{{ item.item_name }}</h3>
+            <p>Orders: {{ item.total_orders }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- 🏆 FAMOUS RESTAURANTS -->
+<div class="section">
+    <h2>🏆 Famous Restaurants</h2>
+
+    <div class="cards-container">
+        {% for r in famous_restaurants %}
+        <div class="card">
+
+            <img 
+              src="{{ url_for('static', filename='uploads/restaurants/' ~ r.restaurant_id ~ '.jpg') }}"
+                onerror="this.src='https://picsum.photos/300/200'"
+                class="card-img"
+            >
+
+            <h3>{{ r.name }}</h3>
+            <p>Total Orders: {{ r.total_orders }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+
+    <div class="footer-container">
+
+        <!-- LOGO + BRAND -->
+        <div class="footer-brand">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" class="footer-logo">
+            <h2>Smart Bites</h2>
+            <p>Great Food • Quick Reciepies • Happy You</p>
+        </div>
+
+        <!-- LINKS -->
+        <div class="footer-links">
+            <h4>Explore</h4>
+            <a href="/">Home</a>
+            <a href="/restaurants">Restaurants</a>
+            <a href="/orders">Orders</a>
+            <a href="/analytics">Analytics</a>
+        </div>
+
+        <!-- SUPPORT -->
+        <div class="footer-links">
+            <h4>Support</h4>
+            <a href="#">Help Center</a>
+            <a href="#">Contact Us</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms</a>
+        </div>
+
+        <!-- Developers -->
+        <div class="footer-links">
+            <h4>Developed By</h4>
+            <p>Muskan Deepak Pichhode</p>
+            <p>Karti Sanjay Gaikwad</p>
+            <p>Anchal Santosh Kushwaha</p>
+        </div>
+
+    </div>
+
+    <!-- BOTTOM -->
+    <div class="footer-bottom">
+        <p>© 2026 Smart Bites. All rights reserved.</p>
+    </div>
+
+</footer>
 
 </body>
 </html>
